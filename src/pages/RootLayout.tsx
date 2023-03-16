@@ -1,13 +1,16 @@
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import HeaderNavigation from '../components/HeaderNavigation';
 
-const RootLayout = () => {
-  return (
-    <>
-      <HeaderNavigation />
-      <Outlet />
-    </>
-  );
-};
+class RootLayout extends React.Component {
+  render() {
+    return (
+      <>
+        <HeaderNavigation />
+        <Outlet />
+      </>
+    );
+  }
+}
 
 export default RootLayout;

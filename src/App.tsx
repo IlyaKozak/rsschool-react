@@ -5,16 +5,17 @@ import RootLayout from './pages/RootLayout';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
+import { PagePath } from './constants/pages';
 import './index.css';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: PagePath.Home,
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: '/', element: <HomePage /> },
-      { path: '/about', element: <AboutPage /> },
+      { path: PagePath.Home, element: <HomePage /> },
+      { path: PagePath.About, element: <AboutPage /> },
     ],
   },
 ]);
