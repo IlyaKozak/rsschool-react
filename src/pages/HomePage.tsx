@@ -1,13 +1,12 @@
 import React from 'react';
-import Card from '../components/Card';
+import CardList from '../components/CardList';
 import { books } from '../mock/books';
 
 class HomePage extends React.Component {
   render() {
-    const book = books[0];
     return (
       <>
-        <Card {...book} />
+        <CardList books={books} />
       </>
     );
   }

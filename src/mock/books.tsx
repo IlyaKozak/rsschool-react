@@ -7,18 +7,18 @@ export const books = [
     rating: 42_074,
   },
   {
+    title: 'Catch-22',
+    author: 'Joseph Heller',
+    cover: '/src/assets/catch-22.jpg',
+    stars: 4.4,
+    rating: 11_629,
+  },
+  {
     title: 'Dune',
     author: 'Frank Herbert',
     cover: '/src/assets/dune.jpg',
     stars: 4.7,
     rating: 72_228,
-  },
-  {
-    title: 'Catch-22',
-    author: 'Joseph Heller',
-    cover: '/src/assets/dune.jpg',
-    stars: 4.4,
-    rating: 11_629,
   },
   {
     title: "Man's Search for Meaning",

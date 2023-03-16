@@ -5,7 +5,10 @@ class AboutPage extends React.Component {
     return (
       <>
         <h1>About Us</h1>
-        <p>Some info...</p>
+        <p>Learning React in RsSchool</p>
+        <a href="https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module01">
+          Task Requirements
+        </a>
       </>
     );
   }
