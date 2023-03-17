@@ -10,11 +10,14 @@ class CardList extends React.Component<CardListProps> {
     const { books } = this.props;
 
     return (
-      <section className="cardList">
-        {books.map((book) => (
-          <Card key={book.title} {...book} />
-        ))}
-      </section>
+      <>
+        <h1>Books</h1>
+        <section className="cardList">
+          {books.map((book) => (
+            <Card key={book.title + book.author} {...book} />
+          ))}
+        </section>
+      </>
     );
   }
 }
