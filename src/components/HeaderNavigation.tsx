@@ -13,10 +13,10 @@ class HeaderNavigation extends React.Component {
         <nav>
           <ul>
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to={PagePath.Home}>Home</NavLink>
             </li>
             <li>
-              <NavLink to="/about">About</NavLink>
+              <NavLink to={PagePath.About}>About</NavLink>
             </li>
           </ul>
         </nav>
@@ -25,4 +25,4 @@ class HeaderNavigation extends React.Component {
   }
 }
 
-export default withRouter(HeaderNavigation as React.ComponentType<WithRouterProps>);
+export default withRouter(HeaderNavigation as React.ComponentClass<WithRouterProps>);
