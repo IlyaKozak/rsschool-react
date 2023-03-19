@@ -1,5 +1,6 @@
 import React from 'react';
 import { searchInitialValue } from '../constants/constants';
+import './Search.css';
 
 class Search extends React.Component {
   state = {
@@ -23,7 +24,7 @@ class Search extends React.Component {
           type="search"
           placeholder="&#128269; Search here …"
           value={this.state.inputValue}
-          onChange={(event) => this.updateInputValue(event)}
+          onChange={this.updateInputValue}
         />
       </section>
     );

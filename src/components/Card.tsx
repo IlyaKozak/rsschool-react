@@ -1,4 +1,5 @@
 import React from 'react';
+import './Card.css';
 
 export type CardProps = {
   title: string;
@@ -14,12 +15,12 @@ class Card extends React.Component<CardProps> {
 
     return (
       <div className="card">
-        <img className="cover" src={cover} alt="book cover" />
-        <h3 className="title">{title}</h3>
-        <em className="author">by {author}</em>
-        <div className="stats">
-          <span className="start">&#9733;{stars}</span>
-          <span className="rating">{rating}&#128200;</span>
+        <img className="card__cover" src={cover} alt="book cover" />
+        <h3 className="card__title">{title}</h3>
+        <em className="card__author">by {author}</em>
+        <div className="card__stats">
+          <span>&#9733;{stars}</span>
+          <span>{rating}&#128200;</span>
         </div>
       </div>
     );

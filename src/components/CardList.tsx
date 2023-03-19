@@ -1,5 +1,6 @@
 import React from 'react';
 import Card, { CardProps } from './Card';
+import './CardList.css';
 
 export type CardListProps = {
   books: CardProps[];
