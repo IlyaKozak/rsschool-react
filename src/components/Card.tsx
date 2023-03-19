@@ -17,7 +17,9 @@ class Card extends React.Component<CardProps> {
       <article className="card">
         <img className="card__cover" src={cover} alt="book cover" />
         <h3 className="card__title">{title}</h3>
-        <em className="card__author">by {author}</em>
+        <em className="card__author" title="author">
+          by {author}
+        </em>
         <div className="card__stats">
           <span>&#9733;{stars}</span>
           <span>{rating}&#128200;</span>

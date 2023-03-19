@@ -13,7 +13,7 @@ describe('CardList', () => {
     expect(screen.getByText(/Books/i)).toBeInTheDocument();
   });
 
-  it('renders card list section', () => {
+  it('renders card list section with class cardList', () => {
     render(<CardList books={books} />);
     expect(screen.getByTitle('card list')).toHaveClass('cardList');
   });
