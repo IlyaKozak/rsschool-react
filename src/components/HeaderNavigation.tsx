@@ -4,7 +4,7 @@ import { PagePath, PagePathToName } from '../constants/pages';
 import withRouter, { WithRouterProps } from '../hoc/withRouter';
 import './HeaderNavigation.css';
 
-class HeaderNavigation extends React.Component {
+class HeaderNavigation extends React.Component<WithRouterProps> {
   render() {
     const path = location.pathname as PagePath;
 
@@ -26,4 +26,4 @@ class HeaderNavigation extends React.Component {
   }
 }
 
-export default withRouter(HeaderNavigation as React.ComponentClass<WithRouterProps>);
+export default withRouter(HeaderNavigation);
