@@ -14,7 +14,7 @@ class Card extends React.Component<CardProps> {
     const { title, author, cover, stars, rating } = this.props;
 
     return (
-      <div className="card">
+      <article className="card">
         <img className="card__cover" src={cover} alt="book cover" />
         <h3 className="card__title">{title}</h3>
         <em className="card__author">by {author}</em>
@@ -22,7 +22,7 @@ class Card extends React.Component<CardProps> {
           <span>&#9733;{stars}</span>
           <span>{rating}&#128200;</span>
         </div>
-      </div>
+      </article>
     );
   }
 }
