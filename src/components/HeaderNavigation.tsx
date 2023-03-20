@@ -6,7 +6,7 @@ import './HeaderNavigation.css';
 
 class HeaderNavigation extends React.Component<WithRouterProps> {
   render() {
-    const path = location.pathname as PagePath;
+    const path = this.props.location.pathname as PagePath;
 
     return (
       <header>
