@@ -1,0 +1,24 @@
+header {
+  text-align: center;
+  margin: 1em;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+nav ul {
+  display: flex;
+  gap: 1em;
+  list-style-type: none;
+}
+
+nav a {
+  text-decoration: none;
+  color: #ffffffde;
+}
+
+nav a.active {
+  text-decoration: underline;
+}
