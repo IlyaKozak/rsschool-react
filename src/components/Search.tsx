@@ -24,7 +24,7 @@ class Search extends React.Component {
           type="search"
           placeholder="&#128269; Search here …"
           value={this.state.inputValue}
-          onChange={this.updateInputValue}
+          onChange={this.updateInputValue.bind(this)}
         />
       </section>
     );
