@@ -1,3 +1,9 @@
+export const pagePath = {
+  Home: '/',
+  Form: '/form',
+  About: '/about',
+};
+
 export const searchValueKey = 'searchValueKey';
 
 export const rsschoolTaskURL =

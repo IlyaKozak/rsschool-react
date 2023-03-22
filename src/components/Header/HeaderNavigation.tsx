@@ -1,24 +1,27 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { PagePath, PagePathToName } from '../../models/pages';
+
 import withRouter, { WithRouterProps } from '../../hoc/withRouter';
+import { pagePath } from '../../constants/constants';
+import getObjKeyFromValue from '../../utils/getObjKeyFromValue';
 import './HeaderNavigation.css';
 
 class HeaderNavigation extends React.Component<WithRouterProps> {
   render() {
-    const path = this.props.location.pathname as PagePath;
+    const path = this.props.location.pathname;
 
     return (
       <header>
-        <h2>{PagePathToName[path]}</h2>
+        <h2>{getObjKeyFromValue(pagePath, path)}</h2>
         <nav>
           <ul>
-            <li>
-              <NavLink to={PagePath.Home}>Home</NavLink>
-            </li>
-            <li>
-              <NavLink to={PagePath.About}>About</NavLink>
-            </li>
+            {(Object.keys(pagePath) as Array<keyof typeof pagePath>).map((page) => {
+              return (
+                <li key={page}>
+                  <NavLink to={pagePath[page]}>{page}</NavLink>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       </header>
