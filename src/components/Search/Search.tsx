@@ -1,10 +1,12 @@
 import React from 'react';
-import { searchInitialValue } from '../../constants/constants';
+
+import { searchValueKey } from '../../constants/constants';
+import withStorage, { WithStorageProps } from '../../hoc/withStorage';
 import './Search.css';
 
-class Search extends React.Component {
+class Search extends React.Component<WithStorageProps> {
   state = {
-    inputValue: localStorage.getItem(searchInitialValue) ?? '',
+    inputValue: this.props.getValue(),
   };
 
   updateInputValue(event: React.ChangeEvent<HTMLInputElement>) {
@@ -14,7 +16,7 @@ class Search extends React.Component {
   }
 
   componentWillUnmount() {
-    localStorage.setItem(searchInitialValue, this.state.inputValue);
+    this.props.setValue(this.state.inputValue);
   }
 
   render() {
@@ -31,4 +33,4 @@ class Search extends React.Component {
   }
 }
 
-export default Search;
+export default withStorage(Search, localStorage, searchValueKey);

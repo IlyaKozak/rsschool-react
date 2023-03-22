@@ -5,11 +5,11 @@ export interface WithRouterProps {
 }
 
 export default function withRouter<Props extends WithRouterProps>(
-  Component: React.ComponentType<Props>
+  WrappedComponent: React.ComponentType<Props>
 ) {
-  function ComponentWithRouterProp(props: Omit<Props, keyof WithRouterProps>) {
-    return <Component {...(props as Props)} location={useLocation()} />;
+  function ComponentWithRouterProps(props: Omit<Props, keyof WithRouterProps>) {
+    return <WrappedComponent {...(props as Props)} location={useLocation()} />;
   }
 
-  return ComponentWithRouterProp;
+  return ComponentWithRouterProps;
 }
