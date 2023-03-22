@@ -12,7 +12,7 @@ export type CardProps = {
 class Card extends React.Component<CardProps> {
   render() {
     const { title, author, cover, stars, rating } = this.props;
-    const imgUrl = new URL(`../assets/${cover}`, import.meta.url).href;
+    const imgUrl = new URL(`/src/assets/${cover}`, import.meta.url).href;
 
     return (
       <article className="card">

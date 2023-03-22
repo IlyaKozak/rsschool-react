@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import HeaderNavigation from '../components/HeaderNavigation';
+import HeaderNavigation from '../components/Header/HeaderNavigation';
 
 class RootLayout extends React.Component {
   render() {

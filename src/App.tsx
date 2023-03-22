@@ -4,7 +4,7 @@ import RootLayout from './pages/RootLayout';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
-import { PagePath } from './constants/pages';
+import { PagePath } from './models/pages';
 import './index.css';
 
 export const routes = [

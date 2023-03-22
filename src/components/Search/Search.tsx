@@ -1,5 +1,5 @@
 import React from 'react';
-import { searchInitialValue } from '../constants/constants';
+import { searchInitialValue } from '../../constants/constants';
 import './Search.css';
 
 class Search extends React.Component {

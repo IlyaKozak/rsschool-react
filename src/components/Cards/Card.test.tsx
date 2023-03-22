@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import Card from './Card';
-import { books } from '../mock/books';
+import { books } from '../../mock/books';
 
 describe('Card', () => {
   it('renders heading h3 - card title', () => {

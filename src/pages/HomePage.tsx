@@ -1,6 +1,6 @@
 import React from 'react';
-import CardList from '../components/CardList';
-import Search from '../components/Search';
+import CardList from '../components/Cards/CardList';
+import Search from '../components/Search/Search';
 import { books } from '../mock/books';
 
 class HomePage extends React.Component {

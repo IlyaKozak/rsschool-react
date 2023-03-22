@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { PagePath, PagePathToName } from '../constants/pages';
-import withRouter, { WithRouterProps } from '../hoc/withRouter';
+import { PagePath, PagePathToName } from '../../models/pages';
+import withRouter, { WithRouterProps } from '../../hoc/withRouter';
 import './HeaderNavigation.css';
 
 class HeaderNavigation extends React.Component<WithRouterProps> {
