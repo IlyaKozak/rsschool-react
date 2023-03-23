@@ -28,3 +28,5 @@ export const books = [
     rating: 62_559,
   },
 ];
+
+export const booksGenres = ['Poetry', 'Fiction', 'Nonfiction', 'Drama', 'Prose'];

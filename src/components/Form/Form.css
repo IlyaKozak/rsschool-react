@@ -1,0 +1,29 @@
+fieldset {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-basis: 33%;
+  gap: 1em;
+  padding: 1em 2em;
+}
+
+fieldset label {
+  padding: 0.3em 0;
+}
+
+button[type="submit"] {
+  font-size: 1em;
+  display: block;
+  padding: 0.5em 2em;
+  margin: 0.5em auto;
+}
+
+button[type="submit"]:hover {
+  cursor: pointer;
+}
+
+.bookcover {
+  padding: 0.3em;
+  border-radius: 5px;
+  background-color: #00000022;
+}
