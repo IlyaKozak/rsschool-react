@@ -13,7 +13,7 @@ class BookCoverInput extends React.Component<InputProps> {
           <input
             type="radio"
             name="bookcover"
-            value="hardcover"
+            value="Hardcover"
             id="hardcover"
             ref={innerRefs![0]}
           />
@@ -22,7 +22,7 @@ class BookCoverInput extends React.Component<InputProps> {
           <input
             type="radio"
             name="bookcover"
-            value="paperback"
+            value="Paperback"
             id="paperback"
             ref={innerRefs![1]}
           />

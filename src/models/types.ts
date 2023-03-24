@@ -13,7 +13,11 @@ export type FormInputs = {
 export type CardProps = {
   title: string;
   author: string;
-  cover: string;
+  image: string;
+  published: Date;
+  isAvailable: boolean;
+  bookcover: 'Hardcover' | 'Paperback';
+  genre: string;
   stars: number;
   rating: number;
 };

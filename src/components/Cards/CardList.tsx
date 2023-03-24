@@ -10,7 +10,6 @@ class CardList extends React.Component<CardListProps> {
 
     return (
       <>
-        <h1>Books</h1>
         <section className="cardList" title="card list">
           {books.map((book) => (
             <Card key={book.title + book.author} {...book} />

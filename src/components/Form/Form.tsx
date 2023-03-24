@@ -32,19 +32,22 @@ class Form extends React.Component {
     bookImageRef: React.createRef(),
   };
   state = {
-    authorValidationText: null,
-    titleValidationText: null,
-    publishedDateValidationText: null,
-    bookGenreValidationText: null,
-    bookCoverValidationText: null,
-    bookIsAvailableValidationText: null,
-    processingIsAgreedValidationText: null,
-    bookImageValidationText: null,
+    validation: {
+      authorValidationText: null,
+      titleValidationText: null,
+      publishedDateValidationText: null,
+      bookGenreValidationText: null,
+      bookCoverValidationText: null,
+      bookIsAvailableValidationText: null,
+      processingIsAgreedValidationText: null,
+      bookImageValidationText: null,
+    },
   };
 
   formSubmitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    this.validateInputs();
+    const formIsValid = this.validateInputs();
+    console.log(formIsValid);
     this.clearForm();
   }
 
@@ -58,6 +61,7 @@ class Form extends React.Component {
       processingIsAgreedRef,
       bookImageRef,
     } = this.formInputsRefs;
+    const { validation } = this.state;
 
     const authorValidationText = getAuthorValidationText(authorRef.current!.value);
     const titleValidationText = getTitleValidationText(titleRef.current!.value);
@@ -73,15 +77,20 @@ class Form extends React.Component {
     );
     const bookImageValidationText = getImageValidationText(bookImageRef.current!.files);
 
+    const formIsValid = Object.values(validation).every((validationMessage) => validationMessage);
+
     this.setState({
-      authorValidationText,
-      titleValidationText,
-      publishedDateValidationText,
-      bookGenreValidationText,
-      bookCoverValidationText,
-      processingIsAgreedValidationText,
-      bookImageValidationText,
+      validation: {
+        authorValidationText,
+        titleValidationText,
+        publishedDateValidationText,
+        bookGenreValidationText,
+        bookCoverValidationText,
+        processingIsAgreedValidationText,
+        bookImageValidationText,
+      },
     });
+    return formIsValid;
   }
 
   clearForm() {
@@ -110,7 +119,7 @@ class Form extends React.Component {
       bookIsAvailableValidationText,
       processingIsAgreedValidationText,
       bookImageValidationText,
-    } = this.state;
+    } = this.state.validation;
 
     return (
       <>

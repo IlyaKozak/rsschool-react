@@ -1,4 +1,6 @@
 import React from 'react';
+
+import CardList from '../components/Cards/CardList';
 import Form from '../components/Form/Form';
 
 class FormPage extends React.Component {
@@ -7,6 +9,7 @@ class FormPage extends React.Component {
       <>
         <h1>Submit a New Card</h1>
         <Form />
+        <CardList books={[]} />
       </>
     );
   }

@@ -8,6 +8,7 @@ class HomePage extends React.Component {
     return (
       <>
         <Search />
+        <h1>Books</h1>
         <CardList books={books} />
       </>
     );

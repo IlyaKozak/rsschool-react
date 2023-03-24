@@ -8,7 +8,7 @@
   border-radius: 8px;
 }
 
-.card:hover {
+.card.available:hover {
   filter: drop-shadow(0 0 0.5em #646cffaa);
   cursor: pointer;
   border-color: #646cff;
