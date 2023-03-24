@@ -32,7 +32,7 @@ button[type="submit"]:hover {
   margin-right: 0;
 }
 
-.bookcover label:last-child {
+.bookcover label:nth-child(2) {
   margin-left: 0;
 }
 

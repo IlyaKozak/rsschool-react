@@ -24,9 +24,9 @@ export const getPublishedDateValidationText = (date: string) => {
   return `Between ${startYear.toLocaleDateString()} and\n ${today.toLocaleDateString()}`;
 };
 
-export const getBookGenreValidationText = (genre: string) => {
-  if (genre !== '') {
+export const getValidationText = (value: string) => {
+  if (value !== '') {
     return null;
   }
-  return `Please choose an option`;
+  return 'Please choose an option';
 };

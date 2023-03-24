@@ -5,9 +5,10 @@ import {
   getAuthorValidationText,
   getPublishedDateValidationText,
   getTitleValidationText,
-  getBookGenreValidationText,
+  getValidationText,
 } from '../../utils/inputsValidators';
 import AuthorInput from '../FormInputs/AuthorInput';
+import BookCoverInput from '../FormInputs/BookCoverInput';
 import BookGenreSelect from '../FormInputs/BookGenreSelect';
 import PublishedDateInput from '../FormInputs/PublishedDateInput';
 import TitleInput from '../FormInputs/TitleInput';
@@ -20,12 +21,14 @@ class Form extends React.Component {
     titleRef: React.createRef(),
     publishedDateRef: React.createRef(),
     bookGenreRef: React.createRef(),
+    bookCoverRefs: [React.createRef(), React.createRef()],
   };
   state = {
     authorValidationText: null,
     titleValidationText: null,
     publishedDateValidationText: null,
     bookGenreValidationText: null,
+    bookCoverValidationText: null,
   };
 
   formSubmitHandler(event: React.FormEvent<HTMLFormElement>) {
@@ -35,19 +38,25 @@ class Form extends React.Component {
   }
 
   validateInputs() {
-    const { authorRef, titleRef, publishedDateRef, bookGenreRef } = this.formInputsRefs;
+    const { authorRef, titleRef, publishedDateRef, bookGenreRef, bookCoverRefs } =
+      this.formInputsRefs;
 
     const authorValidationText = getAuthorValidationText(authorRef.current!.value);
     const titleValidationText = getTitleValidationText(titleRef.current!.value);
     const publishedDateValidationText = getPublishedDateValidationText(
       publishedDateRef.current!.value
     );
-    const bookGenreValidationText = getBookGenreValidationText(bookGenreRef.current!.value);
+    const bookGenreValidationText = getValidationText(bookGenreRef.current!.value);
+    const bookCoverValidationText = bookCoverRefs.some((ref) => ref.current!.checked)
+      ? null
+      : getValidationText('');
+
     this.setState({
       authorValidationText,
       titleValidationText,
       publishedDateValidationText,
       bookGenreValidationText,
+      bookCoverValidationText,
     });
   }
 
@@ -57,12 +66,14 @@ class Form extends React.Component {
   }
 
   render() {
-    const { formRef, authorRef, titleRef, publishedDateRef, bookGenreRef } = this.formInputsRefs;
+    const { formRef, authorRef, titleRef, publishedDateRef, bookGenreRef, bookCoverRefs } =
+      this.formInputsRefs;
     const {
       authorValidationText,
       titleValidationText,
       publishedDateValidationText,
       bookGenreValidationText,
+      bookCoverValidationText,
     } = this.state;
 
     return (
@@ -78,18 +89,7 @@ class Form extends React.Component {
               innerRef={publishedDateRef}
             />
             <BookGenreSelect validationText={bookGenreValidationText} innerRef={bookGenreRef} />
-
-            {/* Switcher/Radio */}
-            <div className="bookcover">
-              <label htmlFor="hardcover">
-                Hardcover
-                <input type="radio" name="bookcover" id="hardcover" />
-              </label>
-              <label htmlFor="paperback">
-                <input type="radio" name="bookcover" id="paperback" />
-                Paperback
-              </label>
-            </div>
+            <BookCoverInput validationText={bookCoverValidationText} innerRefs={bookCoverRefs} />
 
             {/* Checkbox */}
             <label htmlFor="isAvailable">
