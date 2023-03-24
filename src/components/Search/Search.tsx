@@ -6,7 +6,7 @@ import './Search.css';
 
 class Search extends React.Component<WithStorageProps> {
   state = {
-    inputValue: this.props.getValue(),
+    inputValue: this.props.getValue() ?? '',
   };
 
   updateInputValue(event: React.ChangeEvent<HTMLInputElement>) {

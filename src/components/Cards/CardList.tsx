@@ -1,10 +1,8 @@
 import React from 'react';
-import Card, { CardProps } from './Card';
-import './CardList.css';
 
-export type CardListProps = {
-  books: CardProps[];
-};
+import { CardListProps } from '../../models/types';
+import Card from './Card';
+import './CardList.css';
 
 class CardList extends React.Component<CardListProps> {
   render() {

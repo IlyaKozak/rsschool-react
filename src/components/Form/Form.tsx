@@ -1,24 +1,50 @@
 import React from 'react';
+
 import { booksGenres } from '../../mock/books';
+import { FormInputs } from '../../models/types';
+import { getAuthorValidationText, getTitleValidationText } from '../../utils/inputsValidators';
+import AuthorInput from '../FormInputs/AuthorInput';
+import TitleInput from '../FormInputs/TitleInput';
 import './Form.css';
 
 class Form extends React.Component {
+  formInputsRefs: FormInputs = {
+    formRef: React.createRef(),
+    authorRef: React.createRef(),
+    titleRef: React.createRef(),
+  };
+  state = {
+    authorValidationText: null,
+    titleValidationText: null,
+  };
+
+  formSubmitHandler(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const authorValidationText = getAuthorValidationText(
+      this.formInputsRefs.authorRef.current!.value
+    );
+    const titleValidationText = getTitleValidationText(this.formInputsRefs.titleRef.current!.value);
+    this.setState({ authorValidationText, titleValidationText });
+    this.clearForm();
+  }
+
+  clearForm() {
+    const { formRef } = this.formInputsRefs;
+    formRef.current!.reset();
+  }
+
   render() {
+    const { formRef, authorRef, titleRef } = this.formInputsRefs;
+    const { authorValidationText, titleValidationText } = this.state;
+
     return (
       <>
-        <form id="book-form" onSubmit={(e) => e.preventDefault()}>
+        <form id="book-form" onSubmit={this.formSubmitHandler.bind(this)} ref={formRef}>
           <fieldset>
             <legend>Book</legend>
 
-            {/* Text Input */}
-            <label htmlFor="author">
-              Author:
-              <input type="text" id="author" pattern="^[A-Z]{1}[a-zA-Z ]+$" />
-            </label>
-            <label htmlFor="title">
-              Title:
-              <input type="text" id="title" />
-            </label>
+            <AuthorInput validationText={authorValidationText} innerRef={authorRef} />
+            <TitleInput validationText={titleValidationText} innerRef={titleRef} />
 
             {/* Date Input */}
             <label htmlFor="published">
@@ -40,12 +66,6 @@ class Form extends React.Component {
               </select>
             </label>
 
-            {/* Checkbox */}
-            <label htmlFor="isAvailable">
-              <input type="checkbox" name="isAvailable" id="isAvailable" />
-              Book Available
-            </label>
-
             {/* Switcher/Radio */}
             <div className="bookcover">
               <label htmlFor="hardcover">
@@ -53,10 +73,16 @@ class Form extends React.Component {
                 <input type="radio" name="bookcover" id="hardcover" />
               </label>
               <label htmlFor="paperback">
-                Paperback
                 <input type="radio" name="bookcover" id="paperback" />
+                Paperback
               </label>
             </div>
+
+            {/* Checkbox */}
+            <label htmlFor="isAvailable">
+              <input type="checkbox" id="isAvailable" name="isAvailable" />
+              Book Available
+            </label>
 
             {/* File Upload/Image */}
             <label htmlFor="cover">
