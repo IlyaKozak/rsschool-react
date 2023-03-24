@@ -10,6 +10,7 @@ import {
 import AuthorInput from '../FormInputs/AuthorInput';
 import BookCoverInput from '../FormInputs/BookCoverInput';
 import BookGenreSelect from '../FormInputs/BookGenreSelect';
+import BookIsAvailableInput from '../FormInputs/BookIsAvailableInput';
 import PublishedDateInput from '../FormInputs/PublishedDateInput';
 import TitleInput from '../FormInputs/TitleInput';
 import './Form.css';
@@ -22,6 +23,7 @@ class Form extends React.Component {
     publishedDateRef: React.createRef(),
     bookGenreRef: React.createRef(),
     bookCoverRefs: [React.createRef(), React.createRef()],
+    bookIsAvailableRef: React.createRef(),
   };
   state = {
     authorValidationText: null,
@@ -29,6 +31,7 @@ class Form extends React.Component {
     publishedDateValidationText: null,
     bookGenreValidationText: null,
     bookCoverValidationText: null,
+    bookIsAvailableValidationText: null,
   };
 
   formSubmitHandler(event: React.FormEvent<HTMLFormElement>) {
@@ -66,14 +69,22 @@ class Form extends React.Component {
   }
 
   render() {
-    const { formRef, authorRef, titleRef, publishedDateRef, bookGenreRef, bookCoverRefs } =
-      this.formInputsRefs;
+    const {
+      formRef,
+      authorRef,
+      titleRef,
+      publishedDateRef,
+      bookGenreRef,
+      bookCoverRefs,
+      bookIsAvailableRef,
+    } = this.formInputsRefs;
     const {
       authorValidationText,
       titleValidationText,
       publishedDateValidationText,
       bookGenreValidationText,
       bookCoverValidationText,
+      bookIsAvailableValidationText,
     } = this.state;
 
     return (
@@ -90,12 +101,10 @@ class Form extends React.Component {
             />
             <BookGenreSelect validationText={bookGenreValidationText} innerRef={bookGenreRef} />
             <BookCoverInput validationText={bookCoverValidationText} innerRefs={bookCoverRefs} />
-
-            {/* Checkbox */}
-            <label htmlFor="isAvailable">
-              <input type="checkbox" id="isAvailable" name="isAvailable" />
-              Book Available
-            </label>
+            <BookIsAvailableInput
+              validationText={bookIsAvailableValidationText}
+              innerRef={bookIsAvailableRef}
+            />
 
             {/* File Upload/Image */}
             <label htmlFor="cover">
