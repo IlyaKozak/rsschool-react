@@ -6,6 +6,7 @@ export type FormInputs = {
   bookGenreRef: React.RefObject<HTMLSelectElement>;
   bookCoverRefs: React.RefObject<HTMLInputElement>[];
   bookIsAvailableRef: React.RefObject<HTMLInputElement>;
+  processingIsAgreedRef: React.RefObject<HTMLInputElement>;
 };
 
 export type CardProps = {

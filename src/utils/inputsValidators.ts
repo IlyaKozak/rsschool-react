@@ -30,3 +30,6 @@ export const getValidationText = (value: string) => {
   }
   return 'Please choose an option';
 };
+
+export const getValidationRequiredText = (checked: boolean) =>
+  checked ? null : 'This field is mandatory';

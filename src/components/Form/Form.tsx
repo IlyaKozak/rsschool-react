@@ -5,12 +5,14 @@ import {
   getAuthorValidationText,
   getPublishedDateValidationText,
   getTitleValidationText,
+  getValidationRequiredText,
   getValidationText,
 } from '../../utils/inputsValidators';
 import AuthorInput from '../FormInputs/AuthorInput';
 import BookCoverInput from '../FormInputs/BookCoverInput';
 import BookGenreSelect from '../FormInputs/BookGenreSelect';
 import BookIsAvailableInput from '../FormInputs/BookIsAvailableInput';
+import ProcessingIsAgreedInput from '../FormInputs/ProcessingIsAgreedInput';
 import PublishedDateInput from '../FormInputs/PublishedDateInput';
 import TitleInput from '../FormInputs/TitleInput';
 import './Form.css';
@@ -24,6 +26,7 @@ class Form extends React.Component {
     bookGenreRef: React.createRef(),
     bookCoverRefs: [React.createRef(), React.createRef()],
     bookIsAvailableRef: React.createRef(),
+    processingIsAgreedRef: React.createRef(),
   };
   state = {
     authorValidationText: null,
@@ -32,6 +35,7 @@ class Form extends React.Component {
     bookGenreValidationText: null,
     bookCoverValidationText: null,
     bookIsAvailableValidationText: null,
+    processingIsAgreedValidationText: null,
   };
 
   formSubmitHandler(event: React.FormEvent<HTMLFormElement>) {
@@ -41,8 +45,14 @@ class Form extends React.Component {
   }
 
   validateInputs() {
-    const { authorRef, titleRef, publishedDateRef, bookGenreRef, bookCoverRefs } =
-      this.formInputsRefs;
+    const {
+      authorRef,
+      titleRef,
+      publishedDateRef,
+      bookGenreRef,
+      bookCoverRefs,
+      processingIsAgreedRef,
+    } = this.formInputsRefs;
 
     const authorValidationText = getAuthorValidationText(authorRef.current!.value);
     const titleValidationText = getTitleValidationText(titleRef.current!.value);
@@ -53,6 +63,9 @@ class Form extends React.Component {
     const bookCoverValidationText = bookCoverRefs.some((ref) => ref.current!.checked)
       ? null
       : getValidationText('');
+    const processingIsAgreedValidationText = getValidationRequiredText(
+      processingIsAgreedRef.current!.checked
+    );
 
     this.setState({
       authorValidationText,
@@ -60,6 +73,7 @@ class Form extends React.Component {
       publishedDateValidationText,
       bookGenreValidationText,
       bookCoverValidationText,
+      processingIsAgreedValidationText,
     });
   }
 
@@ -77,6 +91,7 @@ class Form extends React.Component {
       bookGenreRef,
       bookCoverRefs,
       bookIsAvailableRef,
+      processingIsAgreedRef,
     } = this.formInputsRefs;
     const {
       authorValidationText,
@@ -85,6 +100,7 @@ class Form extends React.Component {
       bookGenreValidationText,
       bookCoverValidationText,
       bookIsAvailableValidationText,
+      processingIsAgreedValidationText,
     } = this.state;
 
     return (
@@ -107,16 +123,15 @@ class Form extends React.Component {
             />
 
             {/* File Upload/Image */}
-            <label htmlFor="cover">
-              Book Cover:
-              <input type="file" id="cover" name="cover" accept="image/*" />
+            <label htmlFor="image">
+              Book Image:
+              <input type="file" id="image" name="image" />
             </label>
 
-            {/* Checkbox */}
-            <label htmlFor="isAgreed">
-              <input type="checkbox" name="isAgreed" id="isAgreed" />I agree to the processing of
-              provided data
-            </label>
+            <ProcessingIsAgreedInput
+              validationText={processingIsAgreedValidationText}
+              innerRef={processingIsAgreedRef}
+            />
           </fieldset>
         </form>
         <button type="submit" form="book-form">
