@@ -2,8 +2,13 @@ import React from 'react';
 
 import { booksGenres } from '../../mock/books';
 import { FormInputs } from '../../models/types';
-import { getAuthorValidationText, getTitleValidationText } from '../../utils/inputsValidators';
+import {
+  getAuthorValidationText,
+  getPublishedDateValidationText,
+  getTitleValidationText,
+} from '../../utils/inputsValidators';
 import AuthorInput from '../FormInputs/AuthorInput';
+import PublishedDateInput from '../FormInputs/PublishedDateInput';
 import TitleInput from '../FormInputs/TitleInput';
 import './Form.css';
 
@@ -12,20 +17,29 @@ class Form extends React.Component {
     formRef: React.createRef(),
     authorRef: React.createRef(),
     titleRef: React.createRef(),
+    publishedDateRef: React.createRef(),
   };
   state = {
     authorValidationText: null,
     titleValidationText: null,
+    publishedDateValidationText: null,
   };
 
   formSubmitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const authorValidationText = getAuthorValidationText(
-      this.formInputsRefs.authorRef.current!.value
-    );
-    const titleValidationText = getTitleValidationText(this.formInputsRefs.titleRef.current!.value);
-    this.setState({ authorValidationText, titleValidationText });
+    this.validateInputs();
     this.clearForm();
+  }
+
+  validateInputs() {
+    const { authorRef, titleRef, publishedDateRef } = this.formInputsRefs;
+
+    const authorValidationText = getAuthorValidationText(authorRef.current!.value);
+    const titleValidationText = getTitleValidationText(titleRef.current!.value);
+    const publishedDateValidationText = getPublishedDateValidationText(
+      publishedDateRef.current!.value
+    );
+    this.setState({ authorValidationText, titleValidationText, publishedDateValidationText });
   }
 
   clearForm() {
@@ -34,8 +48,8 @@ class Form extends React.Component {
   }
 
   render() {
-    const { formRef, authorRef, titleRef } = this.formInputsRefs;
-    const { authorValidationText, titleValidationText } = this.state;
+    const { formRef, authorRef, titleRef, publishedDateRef } = this.formInputsRefs;
+    const { authorValidationText, titleValidationText, publishedDateValidationText } = this.state;
 
     return (
       <>
@@ -46,11 +60,10 @@ class Form extends React.Component {
             <AuthorInput validationText={authorValidationText} innerRef={authorRef} />
             <TitleInput validationText={titleValidationText} innerRef={titleRef} />
 
-            {/* Date Input */}
-            <label htmlFor="published">
-              Published:
-              <input type="date" id="published" />
-            </label>
+            <PublishedDateInput
+              validationText={publishedDateValidationText}
+              innerRef={publishedDateRef}
+            />
 
             {/* Dropdown/Select */}
             <label htmlFor="genre">

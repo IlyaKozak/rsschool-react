@@ -2,6 +2,7 @@ export type FormInputs = {
   formRef: React.RefObject<HTMLFormElement>;
   authorRef: React.RefObject<HTMLInputElement>;
   titleRef: React.RefObject<HTMLInputElement>;
+  publishedDateRef: React.RefObject<HTMLInputElement>;
 };
 
 export type CardProps = {

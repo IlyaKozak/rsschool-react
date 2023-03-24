@@ -13,3 +13,13 @@ export const getTitleValidationText = (title: string) => {
   }
   return 'Starts with Uppercase/digit.\nAllowed: any chars';
 };
+
+export const getPublishedDateValidationText = (date: string) => {
+  const today = new Date();
+  const startYear = new Date('01-01-1970');
+  const publishedDate = new Date(date);
+  if (startYear <= publishedDate && publishedDate <= today) {
+    return null;
+  }
+  return `Between ${startYear.toLocaleDateString()} and\n ${today.toLocaleDateString()}`;
+};
