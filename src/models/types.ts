@@ -3,6 +3,7 @@ export type FormInputs = {
   authorRef: React.RefObject<HTMLInputElement>;
   titleRef: React.RefObject<HTMLInputElement>;
   publishedDateRef: React.RefObject<HTMLInputElement>;
+  bookGenreRef: React.RefObject<HTMLSelectElement>;
 };
 
 export type CardProps = {
@@ -19,5 +20,5 @@ export type CardListProps = {
 
 export interface InputProps {
   validationText: string | null;
-  innerRef: React.RefObject<HTMLInputElement>;
+  innerRef: React.RefObject<HTMLElement>;
 }

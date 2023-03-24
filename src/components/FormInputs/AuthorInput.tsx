@@ -9,7 +9,7 @@ class AuthorInput extends React.Component<InputProps> {
     return (
       <label htmlFor="author">
         Author:
-        <input type="text" id="author" ref={innerRef} />
+        <input type="text" id="author" ref={innerRef as React.RefObject<HTMLInputElement>} />
         {validationText && <span className="validation-text">{validationText}</span>}
       </label>
     );

@@ -9,7 +9,7 @@ class TitleInput extends React.Component<InputProps> {
     return (
       <label htmlFor="title">
         Title:
-        <input type="text" id="title" ref={innerRef} />
+        <input type="text" id="title" ref={innerRef as React.RefObject<HTMLInputElement>} />
         {validationText && <span className="validation-text">{validationText}</span>}
       </label>
     );
