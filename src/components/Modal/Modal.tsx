@@ -23,7 +23,7 @@ class Modal extends React.Component<ModalProps> {
           <>
             <div className="backdrop" onClick={this.props.onClose}></div>
             <div className="modal">
-              <div>{this.props.children}</div>
+              {this.props.children}
               <button onClick={this.props.onClose}>OK</button>
             </div>
           </>,

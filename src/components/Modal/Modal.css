@@ -17,7 +17,7 @@
   position: fixed;
   text-align: center;
   min-width: 20rem;
-  top: 25vh;
+  top: 15vh;
   background-color: #ffffffde;
   color: #242424;
   padding: 1rem;
@@ -36,6 +36,16 @@
 
 .modal button:hover {
   cursor: pointer;
+}
+
+.modal .card {
+  max-width: 7em;
+  font-size: 0.7em;
+  margin: 0 auto;
+}
+
+.modal .card:hover {
+  cursor: default;  
 }
 
 @media (max-width: 500px) {

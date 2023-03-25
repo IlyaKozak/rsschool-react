@@ -9,6 +9,7 @@ import {
   getValidationRequiredText,
   getValidationText,
 } from '../../utils/inputsValidators';
+import CardItem from '../Cards/CardItem';
 import AuthorInput from '../FormInputs/AuthorInput';
 import BookCoverInput from '../FormInputs/BookCoverInput';
 import BookGenreSelect from '../FormInputs/BookGenreSelect';
@@ -36,6 +37,7 @@ class Form extends React.Component<FormProps> {
     processingIsAgreedRef: React.createRef(),
     bookImageRef: React.createRef(),
   };
+  newCard: Card | null = null;
   state = {
     validation: {
       authorValidationText: null,
@@ -68,8 +70,9 @@ class Form extends React.Component<FormProps> {
         genre: refs.bookGenreRef.current!.value,
       });
 
-      this.props.onCardAdd(newCard);
       this.setState({ isModalOpen: true });
+      this.newCard = newCard;
+      this.props.onCardAdd(newCard);
       this.clearForm();
     }
   }
@@ -157,7 +160,8 @@ class Form extends React.Component<FormProps> {
           isOpen={this.state.isModalOpen}
           onClose={() => this.setState({ isModalOpen: false })}
         >
-          The Card is Created!
+          <p>The Card is Created!</p>
+          {this.newCard && <CardItem {...this.newCard} />}
         </Modal>
       </>
     );

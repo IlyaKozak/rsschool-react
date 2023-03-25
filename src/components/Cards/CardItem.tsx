@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { CardType } from '../../models/types';
+import { Card } from '../../models/types';
 import './CardItem.css';
 
-class CardItem extends React.Component<CardType> {
+class CardItem extends React.Component<Card> {
   render() {
     const { title, author, image, published, isAvailable, bookcover, genre } = this.props;
 
