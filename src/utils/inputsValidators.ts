@@ -7,7 +7,7 @@ export const getAuthorValidationText = (author: string) => {
 };
 
 export const getTitleValidationText = (title: string) => {
-  const regexp = new RegExp(/^[A-Z0-9]\w*$/);
+  const regexp = new RegExp(/^[A-Z0-9].*$/);
   if (regexp.test(title)) {
     return null;
   }

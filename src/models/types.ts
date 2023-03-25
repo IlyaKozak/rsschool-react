@@ -11,7 +11,6 @@ export type FormInputs = {
 };
 
 export type CardType = {
-  id: string;
   title: string;
   author: string;
   image: string;

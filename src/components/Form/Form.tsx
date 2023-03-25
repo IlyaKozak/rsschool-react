@@ -17,6 +17,7 @@ import BookIsAvailableInput from '../FormInputs/BookIsAvailableInput';
 import ProcessingIsAgreedInput from '../FormInputs/ProcessingIsAgreedInput';
 import PublishedDateInput from '../FormInputs/PublishedDateInput';
 import TitleInput from '../FormInputs/TitleInput';
+import Modal from '../Modal/Modal';
 import './Form.css';
 
 type FormProps = {
@@ -46,6 +47,7 @@ class Form extends React.Component<FormProps> {
       processingIsAgreedValidationText: null,
       bookImageValidationText: null,
     },
+    isModalOpen: false,
   };
 
   formSubmitHandler(event: React.FormEvent<HTMLFormElement>) {
@@ -67,7 +69,7 @@ class Form extends React.Component<FormProps> {
       });
 
       this.props.onCardAdd(newCard);
-      // TODO: show modal/portal or success text
+      this.setState({ isModalOpen: true });
       this.clearForm();
     }
   }
@@ -150,6 +152,13 @@ class Form extends React.Component<FormProps> {
         <button type="submit" form="book-form">
           Submit
         </button>
+
+        <Modal
+          isOpen={this.state.isModalOpen}
+          onClose={() => this.setState({ isModalOpen: false })}
+        >
+          The Card is Created!
+        </Modal>
       </>
     );
   }
