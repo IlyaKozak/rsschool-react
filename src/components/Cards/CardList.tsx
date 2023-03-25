@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { CardListProps } from '../../models/types';
-import Card from './Card';
+import CardItem from './CardItem';
 import './CardList.css';
 
 class CardList extends React.Component<CardListProps> {
@@ -12,7 +12,7 @@ class CardList extends React.Component<CardListProps> {
       <>
         <section className="cardList" title="card list">
           {books.map((book) => (
-            <Card key={book.title + book.author} {...book} />
+            <CardItem key={book.id} {...book} />
           ))}
         </section>
       </>

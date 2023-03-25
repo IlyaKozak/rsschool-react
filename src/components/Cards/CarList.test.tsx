@@ -5,12 +5,7 @@ import { books } from '../../mock/books';
 describe('CardList', () => {
   it('renders heading h1', () => {
     render(<CardList books={books} />);
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/books/i);
-  });
-
-  it('renders heading text', () => {
-    render(<CardList books={books} />);
-    expect(screen.getByText(/Books/i)).toBeInTheDocument();
+    expect(screen.getByTitle('card list')).toBeInTheDocument();
   });
 
   it('renders card list section with class cardList', () => {

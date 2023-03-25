@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FormInputs } from '../../models/types';
+import { Card, FormInputs } from '../../models/types';
 import {
   getAuthorValidationText,
   getImageValidationText,
@@ -19,7 +19,11 @@ import PublishedDateInput from '../FormInputs/PublishedDateInput';
 import TitleInput from '../FormInputs/TitleInput';
 import './Form.css';
 
-class Form extends React.Component {
+type FormProps = {
+  onCardAdd: (card: Card) => void;
+};
+
+class Form extends React.Component<FormProps> {
   formInputsRefs: FormInputs = {
     formRef: React.createRef(),
     authorRef: React.createRef(),
@@ -46,50 +50,57 @@ class Form extends React.Component {
 
   formSubmitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const refs = this.formInputsRefs;
+
     const formIsValid = this.validateInputs();
-    console.log(formIsValid);
-    this.clearForm();
+
+    if (formIsValid) {
+      const newCard = new Card({
+        title: refs.titleRef.current!.value,
+        author: refs.authorRef.current!.value,
+        image: URL.createObjectURL(refs.bookImageRef.current!.files![0]),
+        published: new Date(refs.publishedDateRef.current!.value),
+        isAvailable: refs.bookIsAvailableRef.current!.checked,
+        bookcover: refs.bookCoverRefs.filter((ref) => ref.current!.checked)[0].current!.value,
+        genre: refs.bookGenreRef.current!.value,
+      });
+
+      this.props.onCardAdd(newCard);
+      // TODO: show modal/portal or success text
+      this.clearForm();
+    }
   }
 
   validateInputs() {
-    const {
-      authorRef,
-      titleRef,
-      publishedDateRef,
-      bookGenreRef,
-      bookCoverRefs,
-      processingIsAgreedRef,
-      bookImageRef,
-    } = this.formInputsRefs;
-    const { validation } = this.state;
+    const refs = this.formInputsRefs;
 
-    const authorValidationText = getAuthorValidationText(authorRef.current!.value);
-    const titleValidationText = getTitleValidationText(titleRef.current!.value);
-    const publishedDateValidationText = getPublishedDateValidationText(
-      publishedDateRef.current!.value
-    );
-    const bookGenreValidationText = getValidationText(bookGenreRef.current!.value);
-    const bookCoverValidationText = bookCoverRefs.some((ref) => ref.current!.checked)
-      ? null
-      : getValidationText('');
-    const processingIsAgreedValidationText = getValidationRequiredText(
-      processingIsAgreedRef.current!.checked
-    );
-    const bookImageValidationText = getImageValidationText(bookImageRef.current!.files);
-
-    const formIsValid = Object.values(validation).every((validationMessage) => validationMessage);
+    const validationTexts = {
+      authorValidationText: getAuthorValidationText(refs.authorRef.current!.value),
+      titleValidationText: getTitleValidationText(refs.titleRef.current!.value),
+      publishedDateValidationText: getPublishedDateValidationText(
+        refs.publishedDateRef.current!.value
+      ),
+      bookGenreValidationText: getValidationText(refs.bookGenreRef.current!.value),
+      bookCoverValidationText: refs.bookCoverRefs.some((ref) => ref.current!.checked)
+        ? null
+        : getValidationText(''),
+      bookIsAvailableValidationText: null,
+      processingIsAgreedValidationText: getValidationRequiredText(
+        refs.processingIsAgreedRef.current!.checked
+      ),
+      bookImageValidationText: getImageValidationText(refs.bookImageRef.current!.files),
+    };
 
     this.setState({
       validation: {
-        authorValidationText,
-        titleValidationText,
-        publishedDateValidationText,
-        bookGenreValidationText,
-        bookCoverValidationText,
-        processingIsAgreedValidationText,
-        bookImageValidationText,
+        ...validationTexts,
       },
     });
+
+    const formIsValid = Object.values(validationTexts).every(
+      (validationMessage) => !validationMessage
+    );
     return formIsValid;
   }
 
@@ -99,53 +110,40 @@ class Form extends React.Component {
   }
 
   render() {
-    const {
-      formRef,
-      authorRef,
-      titleRef,
-      publishedDateRef,
-      bookGenreRef,
-      bookCoverRefs,
-      bookIsAvailableRef,
-      processingIsAgreedRef,
-      bookImageRef,
-    } = this.formInputsRefs;
-    const {
-      authorValidationText,
-      titleValidationText,
-      publishedDateValidationText,
-      bookGenreValidationText,
-      bookCoverValidationText,
-      bookIsAvailableValidationText,
-      processingIsAgreedValidationText,
-      bookImageValidationText,
-    } = this.state.validation;
+    const refs = this.formInputsRefs;
+    const vals = this.state.validation;
 
     return (
       <>
-        <form id="book-form" onSubmit={this.formSubmitHandler.bind(this)} ref={formRef}>
+        <form id="book-form" onSubmit={this.formSubmitHandler.bind(this)} ref={refs.formRef}>
           <fieldset>
             <legend>Book</legend>
 
-            <AuthorInput validationText={authorValidationText} innerRef={authorRef} />
-            <TitleInput validationText={titleValidationText} innerRef={titleRef} />
+            <AuthorInput validationText={vals.authorValidationText} innerRef={refs.authorRef} />
+            <TitleInput validationText={vals.titleValidationText} innerRef={refs.titleRef} />
             <PublishedDateInput
-              validationText={publishedDateValidationText}
-              innerRef={publishedDateRef}
+              validationText={vals.publishedDateValidationText}
+              innerRef={refs.publishedDateRef}
             />
-            <BookGenreSelect validationText={bookGenreValidationText} innerRef={bookGenreRef} />
-            <BookCoverInput validationText={bookCoverValidationText} innerRefs={bookCoverRefs} />
+            <BookGenreSelect
+              validationText={vals.bookGenreValidationText}
+              innerRef={refs.bookGenreRef}
+            />
+            <BookCoverInput
+              validationText={vals.bookCoverValidationText}
+              innerRefs={refs.bookCoverRefs}
+            />
             <BookIsAvailableInput
-              validationText={bookIsAvailableValidationText}
-              innerRef={bookIsAvailableRef}
+              validationText={vals.bookIsAvailableValidationText}
+              innerRef={refs.bookIsAvailableRef}
             />
             <BookImageUploadInput
-              validationText={bookImageValidationText}
-              innerRef={bookImageRef}
+              validationText={vals.bookImageValidationText}
+              innerRef={refs.bookImageRef}
             />
             <ProcessingIsAgreedInput
-              validationText={processingIsAgreedValidationText}
-              innerRef={processingIsAgreedRef}
+              validationText={vals.processingIsAgreedValidationText}
+              innerRef={refs.processingIsAgreedRef}
             />
           </fieldset>
         </form>
