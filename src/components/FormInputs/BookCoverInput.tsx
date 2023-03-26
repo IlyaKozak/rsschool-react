@@ -28,7 +28,11 @@ class BookCoverInput extends React.Component<InputProps> {
           />
           Paperback
         </label>
-        {validationText && <span className="validation-text">{validationText}</span>}
+        {validationText && (
+          <span className="validation-text" title="validation requirements">
+            {validationText}
+          </span>
+        )}
       </div>
     );
   }
