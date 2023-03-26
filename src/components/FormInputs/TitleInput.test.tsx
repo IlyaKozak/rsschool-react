@@ -2,6 +2,11 @@ import { render, screen } from '@testing-library/react';
 import TitleInput from './TitleInput';
 
 describe('TitleInput', () => {
+  it('renders label title', () => {
+    render(<TitleInput validationText={null} />);
+    expect(screen.getByLabelText('Title:')).toBeInTheDocument();
+  });
+
   it('renders text input field', () => {
     render(<TitleInput validationText={null} />);
     expect(screen.getByRole('textbox')).toBeInTheDocument();

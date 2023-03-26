@@ -2,6 +2,11 @@ import { render, screen } from '@testing-library/react';
 import AuthorInput from './AuthorInput';
 
 describe('AuthorInput', () => {
+  it('renders label author', () => {
+    render(<AuthorInput validationText={null} />);
+    expect(screen.getByLabelText('Author:')).toBeInTheDocument();
+  });
+
   it('renders text input field', () => {
     render(<AuthorInput validationText={null} />);
     expect(screen.getByRole('textbox')).toBeInTheDocument();
