@@ -1,0 +1,52 @@
+form {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+fieldset {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-basis: 33%;
+  padding: 1em 2em;
+}
+
+fieldset label {
+  min-height: 4.3em;
+  margin: 0 1.5em;
+}
+
+button[type="submit"] {
+  font-size: 1em;
+  display: block;
+  padding: 0.5em 2em;
+  margin: 0.5em auto;
+}
+
+button[type="submit"]:hover {
+  cursor: pointer;
+}
+
+.bookcover {
+  /* padding: 0.3em; */
+  border-radius: 5px;
+  background-color: #00000011;
+}
+
+.bookcover label:first-child {
+  margin-right: 0;
+}
+
+.bookcover label:nth-child(2) {
+  margin-left: 0;
+}
+
+.validation-text {
+  display: block;
+  color: crimson;
+  font-size: 0.9em;
+  max-width: 16em;
+  text-align: center;
+  margin: 0;
+  white-space: pre-line
+}

@@ -1,34 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0)
+import RootLayout from './pages/RootLayout';
+import ErrorPage from './pages/ErrorPage';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import FormPage from './pages/FormPage';
+import { pagePath } from './constants/constants';
+import './index.css';
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+export const routes = [
+  {
+    path: pagePath.Home,
+    element: <RootLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: pagePath.Home, element: <HomePage /> },
+      { path: pagePath.About, element: <AboutPage /> },
+      { path: pagePath.Form, element: <FormPage /> },
+    ],
+  },
+];
+
+export default class App extends React.Component {
+  render() {
+    return <RouterProvider router={createBrowserRouter(routes)} />;
+  }
 }
-
-export default App
