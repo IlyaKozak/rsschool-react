@@ -10,7 +10,11 @@ class TitleInput extends React.Component<InputProps> {
       <label htmlFor="title">
         Title:
         <input type="text" id="title" ref={innerRef as React.RefObject<HTMLInputElement>} />
-        {validationText && <span className="validation-text">{validationText}</span>}
+        {validationText && (
+          <span className="validation-text" title="validation requirements">
+            {validationText}
+          </span>
+        )}
       </label>
     );
   }

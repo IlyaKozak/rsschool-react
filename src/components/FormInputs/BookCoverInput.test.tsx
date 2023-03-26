@@ -17,7 +17,7 @@ describe('AuthorInput', () => {
     expect(screen.queryByTitle('validation requirements')).not.toBeInTheDocument();
   });
 
-  it('renders validation-text class for validation message field', () => {
+  it('renders no validation requirements, if validation message is null', () => {
     render(<AuthorInput validationText={'Not Valid'} />);
     expect(screen.getByTitle('validation requirements')).toHaveClass('validation-text');
   });
