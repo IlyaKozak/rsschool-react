@@ -5,7 +5,7 @@ import './Modal.css';
 
 const portalElement = document.getElementById('portal')!;
 
-export type ModalProps = {
+type ModalProps = {
   children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;

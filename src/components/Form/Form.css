@@ -1,3 +1,8 @@
+form {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
 fieldset {
   display: flex;
   justify-content: center;

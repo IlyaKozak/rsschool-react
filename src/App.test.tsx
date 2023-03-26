@@ -20,4 +20,10 @@ describe('App', () => {
     render(<RouterProvider router={router} />);
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(/home/i);
   });
+
+  it('renders form page if /form path', () => {
+    const router = createMemoryRouter(routes, { initialEntries: ['/form'] });
+    render(<RouterProvider router={router} />);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/submit/i);
+  });
 });
