@@ -20,7 +20,11 @@ class BookGenreSelect extends React.Component<InputProps> {
             );
           })}
         </select>
-        {validationText && <span className="validation-text">{validationText}</span>}
+        {validationText && (
+          <span className="validation-text" title="validation requirements">
+            {validationText}
+          </span>
+        )}
       </label>
     );
   }
