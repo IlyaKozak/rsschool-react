@@ -16,7 +16,11 @@ class BookIsAvailableInput extends React.Component<InputProps> {
           ref={innerRef as React.RefObject<HTMLInputElement>}
         />
         Book Available
-        {validationText && <span className="validation-text">{validationText}</span>}
+        {validationText && (
+          <span className="validation-text" title="validation requirements">
+            {validationText}
+          </span>
+        )}
       </label>
     );
   }
