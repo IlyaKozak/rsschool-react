@@ -12,6 +12,7 @@ class BookImageUploadInput extends React.Component<InputProps> {
         <input
           type="file"
           id="image"
+          data-testid="image"
           name="image"
           ref={innerRef as React.RefObject<HTMLInputElement>}
         />

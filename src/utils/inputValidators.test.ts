@@ -85,7 +85,6 @@ describe('getImageValidationText', () => {
 
   it('returns validation message if there are more than one file in filelist', () => {
     const mockFileList = createMockFileList(3, 'image/jpg', 'jpg');
-    console.log(mockFileList[0].size);
     expect(getImageValidationText(mockFileList)).not.toBeNull();
   });
 });

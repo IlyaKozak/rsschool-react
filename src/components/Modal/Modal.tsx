@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 
 import './Modal.css';
 
-const portalElement = document.getElementById('portal')!;
-
 type ModalProps = {
   children: React.ReactNode;
   isOpen: boolean;
@@ -27,7 +25,7 @@ class Modal extends React.Component<ModalProps> {
               <button onClick={this.props.onClose}>OK</button>
             </div>
           </>,
-          portalElement
+          document.getElementById('portal')!
         )}
       </>
     );

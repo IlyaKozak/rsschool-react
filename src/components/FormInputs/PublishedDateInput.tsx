@@ -9,7 +9,12 @@ class PublishedDateInput extends React.Component<InputProps> {
     return (
       <label htmlFor="published">
         Published:
-        <input type="date" id="published" ref={innerRef as React.RefObject<HTMLInputElement>} />
+        <input
+          type="date"
+          id="published"
+          data-testid="published"
+          ref={innerRef as React.RefObject<HTMLInputElement>}
+        />
         {validationText && (
           <span className="validation-text" title="validation requirements">
             {validationText}
