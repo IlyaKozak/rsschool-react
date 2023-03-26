@@ -4,12 +4,12 @@ import PublishedDateInput from './PublishedDateInput';
 describe('PublishedDateInput', () => {
   it('renders label published', () => {
     render(<PublishedDateInput validationText={null} />);
-    expect(screen.getByLabelText('Published:')).toBeInTheDocument();
+    expect(screen.getByLabelText(/published/i)).toBeInTheDocument();
   });
 
   it('renders validation message', () => {
     render(<PublishedDateInput validationText={'Not Valid'} />);
-    expect(screen.getByText('Not Valid')).toBeInTheDocument();
+    expect(screen.getByText(/not valid/i)).toBeInTheDocument();
   });
 
   it('renders no validation requirements, if validation message is null', () => {

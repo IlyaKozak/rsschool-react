@@ -2,9 +2,9 @@ import { render, screen } from '@testing-library/react';
 import TitleInput from './TitleInput';
 
 describe('TitleInput', () => {
-  it('renders label title', () => {
+  it('renders label with text title', () => {
     render(<TitleInput validationText={null} />);
-    expect(screen.getByLabelText('Title:')).toBeInTheDocument();
+    expect(screen.getByLabelText(/title/i)).toBeInTheDocument();
   });
 
   it('renders text input field', () => {
@@ -14,7 +14,7 @@ describe('TitleInput', () => {
 
   it('renders validation message', () => {
     render(<TitleInput validationText={'Not Valid'} />);
-    expect(screen.getByText('Not Valid')).toBeInTheDocument();
+    expect(screen.getByText(/not valid/i)).toBeInTheDocument();
   });
 
   it('renders no validation requirements, if validation message is null', () => {

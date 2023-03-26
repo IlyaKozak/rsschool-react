@@ -16,7 +16,11 @@ class ProcessingIsAgreedInput extends React.Component<InputProps> {
           ref={innerRef as React.RefObject<HTMLInputElement>}
         />
         I agree to the processing of provided data
-        {validationText && <span className="validation-text">{validationText}</span>}
+        {validationText && (
+          <span className="validation-text" title="validation requirements">
+            {validationText}
+          </span>
+        )}
       </label>
     );
   }

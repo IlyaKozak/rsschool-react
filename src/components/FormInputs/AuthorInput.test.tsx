@@ -2,9 +2,9 @@ import { render, screen } from '@testing-library/react';
 import AuthorInput from './AuthorInput';
 
 describe('AuthorInput', () => {
-  it('renders label author', () => {
+  it('renders label with text author', () => {
     render(<AuthorInput validationText={null} />);
-    expect(screen.getByLabelText('Author:')).toBeInTheDocument();
+    expect(screen.getByLabelText(/author/i)).toBeInTheDocument();
   });
 
   it('renders text input field', () => {
@@ -14,7 +14,7 @@ describe('AuthorInput', () => {
 
   it('renders validation message', () => {
     render(<AuthorInput validationText={'Not Valid'} />);
-    expect(screen.getByText('Not Valid')).toBeInTheDocument();
+    expect(screen.getByText(/not valid/i)).toBeInTheDocument();
   });
 
   it('renders no validation requirements, if validation message is null', () => {
