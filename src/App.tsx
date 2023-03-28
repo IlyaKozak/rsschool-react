@@ -22,8 +22,8 @@ export const routes = [
   },
 ];
 
-export default class App extends React.Component {
-  render() {
-    return <RouterProvider router={createBrowserRouter(routes)} />;
-  }
-}
+const App: React.FC = () => {
+  return <RouterProvider router={createBrowserRouter(routes)} />;
+};
+
+export default App;
