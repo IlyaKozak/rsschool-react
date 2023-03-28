@@ -51,3 +51,14 @@ export interface InputProps {
   innerRef?: React.RefObject<HTMLElement>;
   innerRefs?: React.RefObject<HTMLInputElement>[];
 }
+
+export type ValidationTexts = {
+  authorValidationText: string | null;
+  titleValidationText: string | null;
+  publishedDateValidationText: string | null;
+  bookGenreValidationText: string | null;
+  bookCoverValidationText: string | null;
+  bookIsAvailableValidationText: null;
+  processingIsAgreedValidationText: string | null;
+  bookImageValidationText: string | null;
+};
