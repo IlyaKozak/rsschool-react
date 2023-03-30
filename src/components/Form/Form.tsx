@@ -4,19 +4,19 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { Card, FormProps } from '../../models/types';
 import CardItem from '../Cards/CardItem';
 import TextInput from '../FormInputs/TextInput';
+import CheckBoxInput from '../FormInputs/CheckBoxInput';
+import DateInput from '../FormInputs/DateInput';
 // import BookCoverInput from '../FormInputs/BookCoverInput';
 // import BookGenreSelect from '../FormInputs/BookGenreSelect';
 // import BookImageUploadInput from '../FormInputs/BookImageUploadInput';
-// import BookIsAvailableInput from '../FormInputs/BookIsAvailableInput';
-// import PublishedDateInput from '../FormInputs/PublishedDateInput';
 import Modal from '../Modal/Modal';
 import {
   authorRegisterOptions,
   isAgreedRegisterOptions,
+  publishedRegisterOptions,
   titleRegisterOptions,
 } from './formRegisterOptions';
 import './Form.css';
-import CheckBoxInput from '../FormInputs/CheckBoxInput';
 
 const Form: React.FC<FormProps> = (props) => {
   const [newCard, setNewCard] = useState<Card | null>(null);
@@ -65,11 +65,11 @@ const Form: React.FC<FormProps> = (props) => {
             validationText={errors?.title?.message?.toString()}
             {...register('title', titleRegisterOptions)}
           />
-          {/* <PublishedDateInput
-            validationText={validation.publishedDateValidationText}
-            innerRef={formInputsRefs.publishedDateRef}
+          <DateInput
+            validationText={errors?.published?.message?.toString()}
+            {...register('published', publishedRegisterOptions)}
           />
-          <BookGenreSelect
+          {/* <BookGenreSelect
             validationText={validation.bookGenreValidationText}
             innerRef={formInputsRefs.bookGenreRef}
           />

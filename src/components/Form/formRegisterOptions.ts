@@ -17,3 +17,19 @@ export const titleRegisterOptions = {
 export const isAgreedRegisterOptions = {
   required: 'It is a mandatory field.',
 };
+
+const validatePublishedDate = (publishedDate: Date) => {
+  const today = new Date();
+  const startYear = new Date('01-01-1970');
+
+  return (
+    (startYear <= publishedDate && publishedDate <= today) ||
+    `Between ${startYear.toLocaleDateString()} and\n ${today.toLocaleDateString()}`
+  );
+};
+
+export const publishedRegisterOptions = {
+  required: 'It is a mandatory field.',
+  validate: validatePublishedDate,
+  valueAsDate: true,
+};
