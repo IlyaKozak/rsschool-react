@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { searchValueKey } from '../../constants/constants';
 import withStorage, { WithStorageProps } from '../../hoc/withStorage';
@@ -6,16 +6,23 @@ import './Search.css';
 
 const Search: React.FC<WithStorageProps> = (props) => {
   const [searchValue, setSearchValue] = useState(props.getValue() ?? '');
+  const searchValueRef = useRef('');
 
   const updateInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
 
+  const setValueOnCleanup = useCallback(() => {
+    props.setValue(searchValueRef.current);
+  }, [props]);
+
   useEffect(() => {
-    return function cleanup() {
-      props.setValue(searchValue);
-    };
-  });
+    searchValueRef.current = searchValue;
+  }, [searchValue]);
+
+  useEffect(() => {
+    return setValueOnCleanup;
+  }, [setValueOnCleanup]);
 
   return (
     <section className="search">

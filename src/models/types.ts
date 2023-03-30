@@ -1,14 +1,4 @@
-export type FormInputs = {
-  formRef: React.RefObject<HTMLFormElement>;
-  authorRef: React.RefObject<HTMLInputElement>;
-  titleRef: React.RefObject<HTMLInputElement>;
-  publishedDateRef: React.RefObject<HTMLInputElement>;
-  bookGenreRef: React.RefObject<HTMLSelectElement>;
-  bookCoverRefs: React.RefObject<HTMLInputElement>[];
-  bookIsAvailableRef: React.RefObject<HTMLInputElement>;
-  processingIsAgreedRef: React.RefObject<HTMLInputElement>;
-  bookImageRef: React.RefObject<HTMLInputElement>;
-};
+import { ChangeHandler } from 'react-hook-form';
 
 export type CardType = {
   title: string;
@@ -47,18 +37,13 @@ export type CardListProps = {
 };
 
 export interface InputProps {
-  validationText: string | null;
-  innerRef?: React.RefObject<HTMLElement>;
-  innerRefs?: React.RefObject<HTMLInputElement>[];
+  validationText: string;
+  name: string;
+  forwardRef: React.Ref<HTMLInputElement>;
+  onChange: ChangeHandler;
+  onBlur: ChangeHandler;
 }
 
-export type ValidationTexts = {
-  authorValidationText: string | null;
-  titleValidationText: string | null;
-  publishedDateValidationText: string | null;
-  bookGenreValidationText: string | null;
-  bookCoverValidationText: string | null;
-  bookIsAvailableValidationText: null;
-  processingIsAgreedValidationText: string | null;
-  bookImageValidationText: string | null;
+export type FormProps = {
+  onCardAdd: (card: Card) => void;
 };

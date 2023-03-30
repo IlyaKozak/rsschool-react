@@ -16,6 +16,10 @@ fieldset label {
   margin: 0 1.5em;
 }
 
+fieldset label > span:first-child {
+  text-transform: capitalize;
+}
+
 button[type="submit"] {
   font-size: 1em;
   display: block;
