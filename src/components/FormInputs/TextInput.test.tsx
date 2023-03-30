@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import TextInput from './TextInput';
 
-describe('AuthorInput', () => {
+describe('TextInput (author)', () => {
   it('renders label with text author', () => {
     render(<TextInput validationText={null} name={'author'} />);
     expect(screen.getByLabelText(/author/i)).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe('AuthorInput', () => {
   });
 });
 
-describe('TitleInput', () => {
+describe('TextInput (title)', () => {
   it('renders label with text title', () => {
     render(<TextInput validationText={null} name={'title'} />);
     expect(screen.getByLabelText(/title/i)).toBeInTheDocument();

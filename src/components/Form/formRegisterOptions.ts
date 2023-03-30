@@ -13,3 +13,7 @@ export const titleRegisterOptions = {
     message: 'Starts with Uppercase/digit.\nAllowed: any chars.',
   },
 };
+
+export const isAgreedRegisterOptions = {
+  required: 'It is a mandatory field.',
+};

@@ -8,11 +8,15 @@ import TextInput from '../FormInputs/TextInput';
 // import BookGenreSelect from '../FormInputs/BookGenreSelect';
 // import BookImageUploadInput from '../FormInputs/BookImageUploadInput';
 // import BookIsAvailableInput from '../FormInputs/BookIsAvailableInput';
-// import ProcessingIsAgreedInput from '../FormInputs/ProcessingIsAgreedInput';
 // import PublishedDateInput from '../FormInputs/PublishedDateInput';
 import Modal from '../Modal/Modal';
-import { authorRegisterOptions, titleRegisterOptions } from './formRegisterOptions';
+import {
+  authorRegisterOptions,
+  isAgreedRegisterOptions,
+  titleRegisterOptions,
+} from './formRegisterOptions';
 import './Form.css';
+import CheckBoxInput from '../FormInputs/CheckBoxInput';
 
 const Form: React.FC<FormProps> = (props) => {
   const [newCard, setNewCard] = useState<Card | null>(null);
@@ -23,6 +27,7 @@ const Form: React.FC<FormProps> = (props) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    mode: 'onSubmit',
     reValidateMode: 'onSubmit',
   });
 
@@ -71,19 +76,17 @@ const Form: React.FC<FormProps> = (props) => {
           <BookCoverInput
             validationText={validation.bookCoverValidationText}
             innerRefs={formInputsRefs.bookCoverRefs}
-          />
-          <BookIsAvailableInput
-            validationText={validation.bookIsAvailableValidationText}
-            innerRef={formInputsRefs.bookIsAvailableRef}
-          />
-          <BookImageUploadInput
+          /> */}
+          <CheckBoxInput text={'Book Available'} {...register('isAvailable')} />
+          {/* <BookImageUploadInput
             validationText={validation.bookImageValidationText}
             innerRef={formInputsRefs.bookImageRef}
+          /> */}
+          <CheckBoxInput
+            text={'I agree to the processing of provided data'}
+            validationText={errors?.isAgreed?.message?.toString()}
+            {...register('isAgreed', isAgreedRegisterOptions)}
           />
-          <ProcessingIsAgreedInput
-            validationText={validation.processingIsAgreedValidationText}
-            innerRef={formInputsRefs.processingIsAgreedRef}
-          />  */}
         </fieldset>
       </form>
       <button type="submit" form="book-form">

@@ -37,6 +37,7 @@ export type CardListProps = {
 };
 
 export interface InputProps {
+  text?: string;
   validationText: string;
   name: string;
   forwardRef: React.Ref<HTMLInputElement>;
