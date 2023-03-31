@@ -39,6 +39,7 @@ export type CardListProps = {
 export interface InputProps {
   text?: string;
   validationText: string;
+  items?: string[];
   name: string;
   forwardRef: React.Ref<HTMLElement>;
   onChange: ChangeHandler;

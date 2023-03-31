@@ -7,16 +7,16 @@ import TextInput from '../FormInputs/TextInput';
 import CheckBoxInput from '../FormInputs/CheckBoxInput';
 import DateInput from '../FormInputs/DateInput';
 import SelectInput from '../FormInputs/SelectInput';
-// import BookCoverInput from '../FormInputs/BookCoverInput';
+import RadioInput from '../FormInputs/RadioInput';
 // import BookImageUploadInput from '../FormInputs/BookImageUploadInput';
 import Modal from '../Modal/Modal';
 import {
   authorRegisterOptions,
-  genreRegisterOptions,
-  isAgreedRegisterOptions,
-  publishedRegisterOptions,
   titleRegisterOptions,
+  publishedRegisterOptions,
+  requiredRegisterOption,
 } from './formRegisterOptions';
+import { bookCovers, booksGenres } from '../../mock/books';
 import './Form.css';
 
 const Form: React.FC<FormProps> = (props) => {
@@ -73,12 +73,14 @@ const Form: React.FC<FormProps> = (props) => {
           <SelectInput
             text={'Book Genre'}
             validationText={errors?.genre?.message?.toString()}
-            {...register('genre', genreRegisterOptions)}
+            items={booksGenres}
+            {...register('genre', requiredRegisterOption)}
           />
-          {/*<BookCoverInput
-            validationText={validation.bookCoverValidationText}
-            innerRefs={formInputsRefs.bookCoverRefs}
-          /> */}
+          <RadioInput
+            validationText={errors?.bookcover?.message?.toString()}
+            items={bookCovers}
+            {...register('bookcover', requiredRegisterOption)}
+          />
           <CheckBoxInput text={'Book Available'} {...register('isAvailable')} />
           {/* <BookImageUploadInput
             validationText={validation.bookImageValidationText}
@@ -87,7 +89,7 @@ const Form: React.FC<FormProps> = (props) => {
           <CheckBoxInput
             text={'I agree to the processing of provided data'}
             validationText={errors?.isAgreed?.message?.toString()}
-            {...register('isAgreed', isAgreedRegisterOptions)}
+            {...register('isAgreed', requiredRegisterOption)}
           />
         </fieldset>
       </form>

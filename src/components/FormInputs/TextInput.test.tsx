@@ -4,12 +4,12 @@ import TextInput from './TextInput';
 
 describe('TextInput (author)', () => {
   it('renders label with text author', () => {
-    render(<TextInput validationText={null} name={'author'} />);
+    render(<TextInput name={'author'} />);
     expect(screen.getByLabelText(/author/i)).toBeInTheDocument();
   });
 
   it('renders text input field', () => {
-    render(<TextInput validationText={null} />);
+    render(<TextInput />);
     expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
@@ -19,7 +19,7 @@ describe('TextInput (author)', () => {
   });
 
   it('renders no validation requirements, if validation message is null', () => {
-    render(<TextInput validationText={null} />);
+    render(<TextInput />);
     expect(screen.queryByTitle('validation requirements')).not.toBeInTheDocument();
   });
 
@@ -31,12 +31,12 @@ describe('TextInput (author)', () => {
 
 describe('TextInput (title)', () => {
   it('renders label with text title', () => {
-    render(<TextInput validationText={null} name={'title'} />);
+    render(<TextInput name={'title'} />);
     expect(screen.getByLabelText(/title/i)).toBeInTheDocument();
   });
 
   it('renders text input field', () => {
-    render(<TextInput validationText={null} />);
+    render(<TextInput />);
     expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
@@ -46,7 +46,7 @@ describe('TextInput (title)', () => {
   });
 
   it('renders no validation requirements, if validation message is null', () => {
-    render(<TextInput validationText={null} />);
+    render(<TextInput />);
     expect(screen.queryByTitle('validation requirements')).not.toBeInTheDocument();
   });
 

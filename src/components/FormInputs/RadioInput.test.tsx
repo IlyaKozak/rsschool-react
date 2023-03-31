@@ -1,38 +1,36 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
 
-import BookCoverInput from './BookCoverInput';
+import { bookCovers } from '../../mock/books';
+import RadioInput from './RadioInput';
 
-const bookCoverRefs = [React.createRef<HTMLInputElement>(), React.createRef<HTMLInputElement>()];
-
-describe('BookCoverInput', () => {
+describe('RadioInput (bookCover)', () => {
   it('renders label with text hardcover', () => {
-    render(<BookCoverInput validationText={null} innerRefs={bookCoverRefs} />);
+    render(<RadioInput items={bookCovers} />);
     expect(screen.getByLabelText(/hardcover/i)).toBeInTheDocument();
   });
 
   it('renders label with text paperback', () => {
-    render(<BookCoverInput validationText={null} innerRefs={bookCoverRefs} />);
+    render(<RadioInput items={bookCovers} />);
     expect(screen.getByLabelText(/paperback/i)).toBeInTheDocument();
   });
 
   it('renders 2 radio input fields', () => {
-    render(<BookCoverInput validationText={null} innerRefs={bookCoverRefs} />);
+    render(<RadioInput items={bookCovers} />);
     expect(screen.getAllByRole('radio')).toHaveLength(2);
   });
 
   it('renders validation message', () => {
-    render(<BookCoverInput validationText={'Not Valid'} innerRefs={bookCoverRefs} />);
+    render(<RadioInput validationText={'Not Valid'} />);
     expect(screen.getByText(/not valid/i)).toBeInTheDocument();
   });
 
   it('renders no validation requirements, if validation message is null', () => {
-    render(<BookCoverInput validationText={null} innerRefs={bookCoverRefs} />);
+    render(<RadioInput />);
     expect(screen.queryByTitle('validation requirements')).not.toBeInTheDocument();
   });
 
   it('renders validation-text class for validation message field', () => {
-    render(<BookCoverInput validationText={'Not Valid'} innerRefs={bookCoverRefs} />);
+    render(<RadioInput validationText={'Not Valid'} />);
     expect(screen.getByTitle('validation requirements')).toHaveClass('validation-text');
   });
 });

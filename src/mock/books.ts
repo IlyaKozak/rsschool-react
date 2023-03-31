@@ -44,3 +44,5 @@ export const books: Card[] = [
 ];
 
 export const booksGenres = ['Novel', 'Poetry', 'Fiction', 'Nonfiction', 'Drama', 'Prose'];
+
+export const bookCovers = ['Hardcover', 'Paperback'];

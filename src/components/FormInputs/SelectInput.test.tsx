@@ -5,17 +5,17 @@ import SelectInput from './SelectInput';
 
 describe('SelectInput (bookGenre)', () => {
   it('renders label with text genre', () => {
-    render(<SelectInput validationText={null} text={'Book Genre'} />);
+    render(<SelectInput text={'genre'} />);
     expect(screen.getByLabelText(/genre/i)).toBeInTheDocument();
   });
 
   it('renders select', () => {
-    render(<SelectInput validationText={null} />);
+    render(<SelectInput />);
     expect(screen.getByRole('combobox')).toBeInTheDocument();
   });
 
   it('renders select options fields & one default', () => {
-    render(<SelectInput validationText={null} />);
+    render(<SelectInput items={booksGenres} />);
     expect(screen.getAllByRole('option')).toHaveLength(booksGenres.length + 1);
   });
 
@@ -25,7 +25,7 @@ describe('SelectInput (bookGenre)', () => {
   });
 
   it('renders no validation requirements, if validation message is null', () => {
-    render(<SelectInput validationText={null} />);
+    render(<SelectInput />);
     expect(screen.queryByTitle('validation requirements')).not.toBeInTheDocument();
   });
 

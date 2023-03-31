@@ -1,15 +1,14 @@
 import React from 'react';
 
-import { booksGenres } from '../../mock/books';
 import withForwardRef from '../../hoc/withForwardRef';
 import { InputProps } from '../../models/types';
 
-const BookGenreSelect: React.FC<InputProps> = (props) => {
-  const { validationText, text, name, onChange, forwardRef } = props;
+const SelectInput: React.FC<InputProps> = (props) => {
+  const { text, validationText, items, name, onChange, forwardRef } = props;
 
   return (
     <label htmlFor={name}>
-      {text}:
+      <span>{text}:</span>
       <select
         id={name}
         name={name}
@@ -17,10 +16,10 @@ const BookGenreSelect: React.FC<InputProps> = (props) => {
         ref={forwardRef as React.Ref<HTMLSelectElement>}
       >
         <option value="">-- choose --</option>
-        {booksGenres.map((genre) => {
+        {items?.map((item) => {
           return (
-            <option key={genre} value={genre}>
-              {genre}
+            <option key={item} value={item}>
+              {item}
             </option>
           );
         })}
@@ -34,4 +33,4 @@ const BookGenreSelect: React.FC<InputProps> = (props) => {
   );
 };
 
-export default withForwardRef(BookGenreSelect);
+export default withForwardRef(SelectInput);

@@ -14,7 +14,7 @@ export const titleRegisterOptions = {
   },
 };
 
-export const isAgreedRegisterOptions = {
+export const requiredRegisterOption = {
   required: 'It is a mandatory field.',
 };
 
@@ -32,8 +32,4 @@ export const publishedRegisterOptions = {
   required: 'It is a mandatory field.',
   validate: validatePublishedDate,
   valueAsDate: true,
-};
-
-export const genreRegisterOptions = {
-  required: 'It is a mandatory field.',
 };

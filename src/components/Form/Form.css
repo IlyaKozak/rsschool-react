@@ -32,7 +32,6 @@ button[type="submit"]:hover {
 }
 
 .bookcover {
-  /* padding: 0.3em; */
   border-radius: 5px;
   background-color: #00000011;
 }
@@ -49,7 +48,6 @@ button[type="submit"]:hover {
   display: block;
   color: crimson;
   font-size: 0.9em;
-  max-width: 16em;
   text-align: center;
   margin: 0;
   white-space: pre-line
