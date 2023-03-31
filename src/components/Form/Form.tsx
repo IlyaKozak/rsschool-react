@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
-import { Card, FormProps } from '../../models/types';
 import CardItem from '../Cards/CardItem';
 import TextInput from '../FormInputs/TextInput';
 import CheckBoxInput from '../FormInputs/CheckBoxInput';
 import DateInput from '../FormInputs/DateInput';
 import SelectInput from '../FormInputs/SelectInput';
 import RadioInput from '../FormInputs/RadioInput';
-// import BookImageUploadInput from '../FormInputs/BookImageUploadInput';
+import FileInput from '../FormInputs/FileInput';
 import Modal from '../Modal/Modal';
 import {
   authorRegisterOptions,
   titleRegisterOptions,
   publishedRegisterOptions,
   requiredRegisterOption,
+  imageRegisterOptions,
 } from './formRegisterOptions';
 import { bookCovers, booksGenres } from '../../mock/books';
+import { Card, FormProps } from '../../models/types';
 import './Form.css';
 
 const Form: React.FC<FormProps> = (props) => {
@@ -32,23 +33,22 @@ const Form: React.FC<FormProps> = (props) => {
     reValidateMode: 'onSubmit',
   });
 
-  useEffect(() => console.log('errors', errors), [errors]);
-
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    // const submittedCard = new Card({
-    //   title,
-    //   author,
-    //   image: URL.createObjectURL(image.files![0]),
-    //   published: new Date(published),
-    //   isAvailable: isAvailable.checked,
-    //   bookcover: formInputsRefs.bookCoverRefs.filter((ref) => ref.current!.checked)[0].current!
-    //     .value,
-    //   genre,
-    // });
-    // setNewCard(submittedCard);
-    // setIsModalOpen(true);
-    // props.onCardAdd(submittedCard);
-    console.log(data);
+    const { author, title, image, published, isAvailable, bookcover, genre } = data;
+
+    const submittedCard = new Card({
+      author,
+      title,
+      image: URL.createObjectURL(image[0]),
+      published,
+      isAvailable,
+      bookcover,
+      genre,
+    });
+
+    setNewCard(submittedCard);
+    setIsModalOpen(true);
+    props.onCardAdd(submittedCard);
     reset();
   };
 
@@ -82,10 +82,11 @@ const Form: React.FC<FormProps> = (props) => {
             {...register('bookcover', requiredRegisterOption)}
           />
           <CheckBoxInput text={'Book Available'} {...register('isAvailable')} />
-          {/* <BookImageUploadInput
-            validationText={validation.bookImageValidationText}
-            innerRef={formInputsRefs.bookImageRef}
-          /> */}
+          <FileInput
+            text={'Book Image'}
+            validationText={errors?.image?.message?.toString()}
+            {...register('image', imageRegisterOptions)}
+          />
           <CheckBoxInput
             text={'I agree to the processing of provided data'}
             validationText={errors?.isAgreed?.message?.toString()}

@@ -33,3 +33,20 @@ export const publishedRegisterOptions = {
   validate: validatePublishedDate,
   valueAsDate: true,
 };
+
+const validateImage = (files: FileList | null) => {
+  const BYTES_IN_ONE_KB = 1024;
+  const KB = 250;
+  if (files?.length !== 1 || !files[0].type.startsWith('image/')) {
+    return 'Please upload one image';
+  }
+  if (files[0].size > KB * BYTES_IN_ONE_KB) {
+    return `Image size sould be less than ${KB}K`;
+  }
+  return true;
+};
+
+export const imageRegisterOptions = {
+  required: 'It is a mandatory field.',
+  validate: validateImage,
+};
