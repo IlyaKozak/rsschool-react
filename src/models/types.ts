@@ -40,7 +40,7 @@ export interface InputProps {
   text?: string;
   validationText: string;
   name: string;
-  forwardRef: React.Ref<HTMLInputElement>;
+  forwardRef: React.Ref<HTMLElement>;
   onChange: ChangeHandler;
   onBlur: ChangeHandler;
 }

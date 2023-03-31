@@ -9,7 +9,13 @@ const TextInput: React.FC<InputProps> = (props) => {
   return (
     <label htmlFor={name}>
       <span>{name}:</span>
-      <input type="text" name={name} id={name} ref={forwardRef} onChange={onChange} />
+      <input
+        type="text"
+        name={name}
+        id={name}
+        ref={forwardRef as React.Ref<HTMLInputElement>}
+        onChange={onChange}
+      />
       {validationText && (
         <span className="validation-text" title="validation requirements">
           {validationText}

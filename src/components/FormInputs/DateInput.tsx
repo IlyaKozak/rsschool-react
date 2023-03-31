@@ -4,7 +4,7 @@ import withForwardRef from '../../hoc/withForwardRef';
 import { InputProps } from '../../models/types';
 
 const DateInput: React.FC<InputProps> = (props) => {
-  const { validationText, name, onChange, onBlur, forwardRef } = props;
+  const { validationText, name, onChange, forwardRef } = props;
 
   return (
     <label htmlFor={name}>
@@ -14,9 +14,8 @@ const DateInput: React.FC<InputProps> = (props) => {
         id={name}
         name={name}
         data-testid={name}
-        ref={forwardRef}
+        ref={forwardRef as React.Ref<HTMLInputElement>}
         onChange={onChange}
-        onBlur={onBlur}
       />
       {validationText && (
         <span className="validation-text" title="validation requirements">

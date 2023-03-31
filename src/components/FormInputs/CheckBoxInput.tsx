@@ -12,7 +12,7 @@ const CheckBoxInput: React.FC<InputProps> = (props) => {
         type="checkbox"
         id={name}
         name={name}
-        ref={forwardRef}
+        ref={forwardRef as React.Ref<HTMLInputElement>}
         onChange={onChange}
         onBlur={onBlur}
       />

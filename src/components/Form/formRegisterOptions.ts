@@ -33,3 +33,7 @@ export const publishedRegisterOptions = {
   validate: validatePublishedDate,
   valueAsDate: true,
 };
+
+export const genreRegisterOptions = {
+  required: 'It is a mandatory field.',
+};

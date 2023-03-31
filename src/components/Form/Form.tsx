@@ -6,12 +6,13 @@ import CardItem from '../Cards/CardItem';
 import TextInput from '../FormInputs/TextInput';
 import CheckBoxInput from '../FormInputs/CheckBoxInput';
 import DateInput from '../FormInputs/DateInput';
+import SelectInput from '../FormInputs/SelectInput';
 // import BookCoverInput from '../FormInputs/BookCoverInput';
-// import BookGenreSelect from '../FormInputs/BookGenreSelect';
 // import BookImageUploadInput from '../FormInputs/BookImageUploadInput';
 import Modal from '../Modal/Modal';
 import {
   authorRegisterOptions,
+  genreRegisterOptions,
   isAgreedRegisterOptions,
   publishedRegisterOptions,
   titleRegisterOptions,
@@ -69,11 +70,12 @@ const Form: React.FC<FormProps> = (props) => {
             validationText={errors?.published?.message?.toString()}
             {...register('published', publishedRegisterOptions)}
           />
-          {/* <BookGenreSelect
-            validationText={validation.bookGenreValidationText}
-            innerRef={formInputsRefs.bookGenreRef}
+          <SelectInput
+            text={'Book Genre'}
+            validationText={errors?.genre?.message?.toString()}
+            {...register('genre', genreRegisterOptions)}
           />
-          <BookCoverInput
+          {/*<BookCoverInput
             validationText={validation.bookCoverValidationText}
             innerRefs={formInputsRefs.bookCoverRefs}
           /> */}
