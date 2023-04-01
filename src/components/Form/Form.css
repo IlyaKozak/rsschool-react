@@ -11,7 +11,7 @@ fieldset {
   padding: 1em 2em;
 }
 
-fieldset label {
+fieldset > label, fieldset > div {
   min-height: 4.3em;
   margin: 0 1.5em;
 }
