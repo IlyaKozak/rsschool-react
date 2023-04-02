@@ -1,171 +1,109 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 
-import { Card, FormInputs } from '../../models/types';
-import {
-  getAuthorValidationText,
-  getImageValidationText,
-  getPublishedDateValidationText,
-  getTitleValidationText,
-  getValidationRequiredText,
-  getValidationText,
-} from '../../utils/inputsValidators';
 import CardItem from '../Cards/CardItem';
-import AuthorInput from '../FormInputs/AuthorInput';
-import BookCoverInput from '../FormInputs/BookCoverInput';
-import BookGenreSelect from '../FormInputs/BookGenreSelect';
-import BookImageUploadInput from '../FormInputs/BookImageUploadInput';
-import BookIsAvailableInput from '../FormInputs/BookIsAvailableInput';
-import ProcessingIsAgreedInput from '../FormInputs/ProcessingIsAgreedInput';
-import PublishedDateInput from '../FormInputs/PublishedDateInput';
-import TitleInput from '../FormInputs/TitleInput';
+import TextInput from '../FormInputs/TextInput';
+import CheckBoxInput from '../FormInputs/CheckBoxInput';
+import DateInput from '../FormInputs/DateInput';
+import SelectInput from '../FormInputs/SelectInput';
+import RadioInput from '../FormInputs/RadioInput';
+import FileInput from '../FormInputs/FileInput';
 import Modal from '../Modal/Modal';
+import {
+  authorRegisterOptions,
+  titleRegisterOptions,
+  publishedRegisterOptions,
+  requiredRegisterOption,
+  imageRegisterOptions,
+} from './formRegisterOptions';
+import { bookCovers, booksGenres } from '../../mock/books';
+import { Card, FormProps } from '../../models/types';
 import './Form.css';
 
-type FormProps = {
-  onCardAdd: (card: Card) => void;
-};
+const Form: React.FC<FormProps> = (props) => {
+  const [newCard, setNewCard] = useState<Card | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+  });
 
-class Form extends React.Component<FormProps> {
-  formInputsRefs: FormInputs = {
-    formRef: React.createRef(),
-    authorRef: React.createRef(),
-    titleRef: React.createRef(),
-    publishedDateRef: React.createRef(),
-    bookGenreRef: React.createRef(),
-    bookCoverRefs: [React.createRef(), React.createRef()],
-    bookIsAvailableRef: React.createRef(),
-    processingIsAgreedRef: React.createRef(),
-    bookImageRef: React.createRef(),
-  };
-  newCard: Card | null = null;
-  state = {
-    validation: {
-      authorValidationText: null,
-      titleValidationText: null,
-      publishedDateValidationText: null,
-      bookGenreValidationText: null,
-      bookCoverValidationText: null,
-      bookIsAvailableValidationText: null,
-      processingIsAgreedValidationText: null,
-      bookImageValidationText: null,
-    },
-    isModalOpen: false,
-  };
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const { author, title, image, published, isAvailable, bookcover, genre } = data;
 
-  formSubmitHandler(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const refs = this.formInputsRefs;
-
-    const formIsValid = this.validateInputs();
-
-    if (formIsValid) {
-      const newCard = new Card({
-        title: refs.titleRef.current!.value,
-        author: refs.authorRef.current!.value,
-        image: URL.createObjectURL(refs.bookImageRef.current!.files![0]),
-        published: new Date(refs.publishedDateRef.current!.value),
-        isAvailable: refs.bookIsAvailableRef.current!.checked,
-        bookcover: refs.bookCoverRefs.filter((ref) => ref.current!.checked)[0].current!.value,
-        genre: refs.bookGenreRef.current!.value,
-      });
-
-      this.setState({ isModalOpen: true });
-      this.newCard = newCard;
-      this.props.onCardAdd(newCard);
-      this.clearForm();
-    }
-  }
-
-  validateInputs() {
-    const refs = this.formInputsRefs;
-
-    const validationTexts = {
-      authorValidationText: getAuthorValidationText(refs.authorRef.current!.value),
-      titleValidationText: getTitleValidationText(refs.titleRef.current!.value),
-      publishedDateValidationText: getPublishedDateValidationText(
-        refs.publishedDateRef.current!.value
-      ),
-      bookGenreValidationText: getValidationText(refs.bookGenreRef.current!.value),
-      bookCoverValidationText: refs.bookCoverRefs.some((ref) => ref.current!.checked)
-        ? null
-        : getValidationText(''),
-      bookIsAvailableValidationText: null,
-      processingIsAgreedValidationText: getValidationRequiredText(
-        refs.processingIsAgreedRef.current!.checked
-      ),
-      bookImageValidationText: getImageValidationText(refs.bookImageRef.current!.files),
-    };
-
-    this.setState({
-      validation: {
-        ...validationTexts,
-      },
+    const submittedCard = new Card({
+      author,
+      title,
+      image: URL.createObjectURL(image[0]),
+      published,
+      isAvailable,
+      bookcover,
+      genre,
     });
 
-    const formIsValid = Object.values(validationTexts).every(
-      (validationMessage) => !validationMessage
-    );
-    return formIsValid;
-  }
+    setNewCard(submittedCard);
+    setIsModalOpen(true);
+    props.onCardAdd(submittedCard);
+    reset();
+  };
 
-  clearForm() {
-    const { formRef } = this.formInputsRefs;
-    formRef.current!.reset();
-  }
+  return (
+    <>
+      <form id="book-form" onSubmit={handleSubmit(onSubmit)}>
+        <fieldset>
+          <legend>Book</legend>
 
-  render() {
-    const refs = this.formInputsRefs;
-    const vals = this.state.validation;
+          <TextInput
+            validationText={errors?.author?.message?.toString()}
+            {...register('author', authorRegisterOptions)}
+          />
+          <TextInput
+            validationText={errors?.title?.message?.toString()}
+            {...register('title', titleRegisterOptions)}
+          />
+          <DateInput
+            validationText={errors?.published?.message?.toString()}
+            {...register('published', publishedRegisterOptions)}
+          />
+          <SelectInput
+            text={'Book Genre'}
+            validationText={errors?.genre?.message?.toString()}
+            items={booksGenres}
+            {...register('genre', requiredRegisterOption)}
+          />
+          <RadioInput
+            validationText={errors?.bookcover?.message?.toString()}
+            items={bookCovers}
+            {...register('bookcover', requiredRegisterOption)}
+          />
+          <CheckBoxInput text={'Book Available'} {...register('isAvailable')} />
+          <FileInput
+            text={'Book Image'}
+            validationText={errors?.image?.message?.toString()}
+            {...register('image', imageRegisterOptions)}
+          />
+          <CheckBoxInput
+            text={'I agree to the processing of provided data'}
+            validationText={errors?.isAgreed?.message?.toString()}
+            {...register('isAgreed', requiredRegisterOption)}
+          />
+        </fieldset>
+      </form>
+      <button type="submit" form="book-form">
+        Submit
+      </button>
 
-    return (
-      <>
-        <form id="book-form" onSubmit={this.formSubmitHandler.bind(this)} ref={refs.formRef}>
-          <fieldset>
-            <legend>Book</legend>
-
-            <AuthorInput validationText={vals.authorValidationText} innerRef={refs.authorRef} />
-            <TitleInput validationText={vals.titleValidationText} innerRef={refs.titleRef} />
-            <PublishedDateInput
-              validationText={vals.publishedDateValidationText}
-              innerRef={refs.publishedDateRef}
-            />
-            <BookGenreSelect
-              validationText={vals.bookGenreValidationText}
-              innerRef={refs.bookGenreRef}
-            />
-            <BookCoverInput
-              validationText={vals.bookCoverValidationText}
-              innerRefs={refs.bookCoverRefs}
-            />
-            <BookIsAvailableInput
-              validationText={vals.bookIsAvailableValidationText}
-              innerRef={refs.bookIsAvailableRef}
-            />
-            <BookImageUploadInput
-              validationText={vals.bookImageValidationText}
-              innerRef={refs.bookImageRef}
-            />
-            <ProcessingIsAgreedInput
-              validationText={vals.processingIsAgreedValidationText}
-              innerRef={refs.processingIsAgreedRef}
-            />
-          </fieldset>
-        </form>
-        <button type="submit" form="book-form">
-          Submit
-        </button>
-
-        <Modal
-          isOpen={this.state.isModalOpen}
-          onClose={() => this.setState({ isModalOpen: false })}
-        >
-          <p>The Card is Created!</p>
-          {this.newCard && <CardItem {...this.newCard} />}
-        </Modal>
-      </>
-    );
-  }
-}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <p>The Card is Created!</p>
+        {newCard && <CardItem {...newCard} />}
+      </Modal>
+    </>
+  );
+};
 
 export default Form;

@@ -1,33 +1,27 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 
 import Form from '../components/Form/Form';
 import CardList from '../components/Cards/CardList';
 import { Card } from '../models/types';
+import CardsContext from '../context/cardsContext';
 
-type FormPageState = {
-  cards: Card[];
-};
+const FormPage: React.FC = () => {
+  const cardsContext = useContext(CardsContext);
+  const { addCardHandler } = cardsContext;
 
-class FormPage extends React.Component<Record<string, never>, FormPageState> {
-  state: FormPageState = {
-    cards: [],
+  const [formCards, setFormCards] = useState<Card[]>([]);
+  const addFormCardHandler = (card: Card) => {
+    setFormCards((prevCards) => [...prevCards, card]);
+    addCardHandler(card);
   };
 
-  addCardHandler(card: Card) {
-    this.setState((prevState) => ({
-      cards: [...prevState.cards, card],
-    }));
-  }
-
-  render() {
-    return (
-      <>
-        <h1>Submit a New Card</h1>
-        <Form onCardAdd={this.addCardHandler.bind(this)} />
-        <CardList books={this.state.cards} />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <h1>Submit a New Card</h1>
+      <Form onCardAdd={addFormCardHandler} />
+      <CardList books={formCards} />
+    </>
+  );
+};
 
 export default FormPage;

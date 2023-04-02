@@ -11,9 +11,13 @@ fieldset {
   padding: 1em 2em;
 }
 
-fieldset label {
+fieldset > label, fieldset > div {
   min-height: 4.3em;
   margin: 0 1.5em;
+}
+
+fieldset label > span:first-child {
+  text-transform: capitalize;
 }
 
 button[type="submit"] {
@@ -28,7 +32,6 @@ button[type="submit"]:hover {
 }
 
 .bookcover {
-  /* padding: 0.3em; */
   border-radius: 5px;
   background-color: #00000011;
 }
@@ -45,8 +48,13 @@ button[type="submit"]:hover {
   display: block;
   color: crimson;
   font-size: 0.9em;
-  max-width: 16em;
   text-align: center;
   margin: 0;
   white-space: pre-line
+}
+
+@media screen and (max-width: 500px) {
+  fieldset {
+    padding: 0;
+  }
 }

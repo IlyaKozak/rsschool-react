@@ -18,9 +18,9 @@ describe('Form', () => {
 
     render(<Form onCardAdd={vi.fn()} />);
 
-    const authorInput = screen.getByRole('textbox', { name: 'Author:' });
+    const authorInput = screen.getByRole('textbox', { name: /author/i });
     await user.type(authorInput, 'Author');
-    const titleInput = screen.getByRole('textbox', { name: 'Title:' });
+    const titleInput = screen.getByRole('textbox', { name: /title/i });
     await user.type(titleInput, 'Title');
     const agreeCheckbox = screen.getByRole('checkbox', {
       name: 'I agree to the processing of provided data',

@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
 import CardList from '../components/Cards/CardList';
 import Search from '../components/Search/Search';
-import { books } from '../mock/books';
+import CardsContext from '../context/cardsContext';
 
-class HomePage extends React.Component {
-  render() {
-    return (
-      <>
-        <Search />
-        <h1>Books</h1>
-        <CardList books={books} />
-      </>
-    );
-  }
-}
+const HomePage: React.FC = () => {
+  const cardsContext = useContext(CardsContext);
+  const { cards } = cardsContext;
+
+  return (
+    <>
+      <Search />
+      <h1>Books</h1>
+      <CardList books={[...cards]} />
+    </>
+  );
+};
 
 export default HomePage;
