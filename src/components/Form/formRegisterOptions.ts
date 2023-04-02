@@ -20,7 +20,7 @@ export const requiredRegisterOption = {
 
 const validatePublishedDate = (publishedDate: Date) => {
   const today = new Date();
-  const startYear = new Date('01-01-1970');
+  const startYear = new Date(0);
 
   return (
     (startYear <= publishedDate && publishedDate <= today) ||

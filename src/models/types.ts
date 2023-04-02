@@ -49,3 +49,8 @@ export interface InputProps {
 export type FormProps = {
   onCardAdd: (card: Card) => void;
 };
+
+export interface ICardsContext {
+  cards: Card[];
+  addCardHandler: (card: Card) => void;
+}

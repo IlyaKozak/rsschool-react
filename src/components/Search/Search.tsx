@@ -5,7 +5,9 @@ import withStorage, { WithStorageProps } from '../../hoc/withStorage';
 import './Search.css';
 
 const Search: React.FC<WithStorageProps> = (props) => {
-  const [searchValue, setSearchValue] = useState(props.getValue() ?? '');
+  const { getValue, setValue } = props;
+  const storedSearchValue = getValue() ?? '';
+  const [searchValue, setSearchValue] = useState(storedSearchValue);
   const searchValueRef = useRef('');
 
   const updateInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,8 +15,10 @@ const Search: React.FC<WithStorageProps> = (props) => {
   };
 
   const setValueOnCleanup = useCallback(() => {
-    props.setValue(searchValueRef.current);
-  }, [props]);
+    if (storedSearchValue !== searchValueRef.current) {
+      setValue(searchValueRef.current);
+    }
+  }, [storedSearchValue, setValue]);
 
   useEffect(() => {
     searchValueRef.current = searchValue;

@@ -52,3 +52,9 @@ button[type="submit"]:hover {
   margin: 0;
   white-space: pre-line
 }
+
+@media screen and (max-width: 500px) {
+  fieldset {
+    padding: 0;
+  }
+}
