@@ -8,9 +8,13 @@ const HomePage: React.FC = () => {
   const cardsContext = useContext(CardsContext);
   const { cards } = cardsContext;
 
+  const searchEventHandler = (searchValue: string) => {
+    console.log(searchValue);
+  };
+
   return (
     <>
-      <Search />
+      <Search onSearch={searchEventHandler} />
       <h1>Books</h1>
       <CardList books={[...cards]} />
     </>

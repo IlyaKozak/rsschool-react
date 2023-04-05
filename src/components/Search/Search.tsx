@@ -2,10 +2,11 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { searchValueKey } from '../../constants/constants';
 import withStorage, { WithStorageProps } from '../../hoc/withStorage';
+import { SearchProps } from '../../models/types';
 import './Search.css';
 
-const Search: React.FC<WithStorageProps> = (props) => {
-  const { getValue, setValue } = props;
+const Search: React.FC<SearchProps & WithStorageProps> = (props) => {
+  const { getValue, setValue, onSearch } = props;
   const storedSearchValue = getValue() ?? '';
   const [searchValue, setSearchValue] = useState(storedSearchValue);
   const searchValueRef = useRef('');
@@ -28,15 +29,21 @@ const Search: React.FC<WithStorageProps> = (props) => {
     return setValueOnCleanup;
   }, [setValueOnCleanup]);
 
+  const submitHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+    onSearch(searchValueRef.current);
+    setSearchValue('');
+  };
+
   return (
-    <section className="search">
+    <form className="search" onSubmit={submitHandler}>
       <input
         type="search"
-        placeholder="&#128269; Search here …"
+        placeholder="&#128269; Search here … Press Enter"
         value={searchValue}
         onChange={updateInputValue}
       />
-    </section>
+    </form>
   );
 };
 

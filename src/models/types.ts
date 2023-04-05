@@ -46,6 +46,10 @@ export interface InputProps {
   onBlur: ChangeHandler;
 }
 
+export interface SearchProps {
+  onSearch: (searchValue: string) => void;
+}
+
 export type FormProps = {
   onCardAdd: (card: Card) => void;
 };

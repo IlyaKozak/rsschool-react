@@ -1,18 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import Form from '../components/Form/Form';
 import CardList from '../components/Cards/CardList';
 import { Card } from '../models/types';
-import CardsContext from '../context/cardsContext';
 
 const FormPage: React.FC = () => {
-  const cardsContext = useContext(CardsContext);
-  const { addCardHandler } = cardsContext;
-
   const [formCards, setFormCards] = useState<Card[]>([]);
   const addFormCardHandler = (card: Card) => {
     setFormCards((prevCards) => [...prevCards, card]);
-    addCardHandler(card);
   };
 
   return (
