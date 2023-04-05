@@ -39,13 +39,22 @@
 }
 
 .modal .card {
-  max-width: 7em;
-  font-size: 0.7em;
   margin: 0 auto;
 }
 
 .modal .card:hover {
   cursor: default;  
+}
+
+.cross {
+  position: absolute;
+  top: 0.75em;
+  right: 0.75em;
+  white-space: pre-line;
+}
+
+.cross:hover {
+  cursor: pointer;
 }
 
 @media (max-width: 500px) {

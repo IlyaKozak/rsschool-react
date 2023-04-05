@@ -1,19 +1,18 @@
 import { PropsWithChildren, useState } from 'react';
 
 import CardsContext from './cardsContext';
-import { Card } from '../models/types';
-import { books } from '../mock/books';
+import { MiniCard } from '../models/types';
 
 const CardsProvider = (props: PropsWithChildren) => {
-  const [cards, setCards] = useState<Card[]>([...books]);
+  const [cards, setCards] = useState<MiniCard[]>([]);
 
-  const addCardHandler = (card: Card) => {
-    setCards((prevCards) => [...prevCards, card]);
+  const addCardsHandler = (cards: MiniCard[]) => {
+    setCards(cards);
   };
 
   const cardsContext = {
     cards,
-    addCardHandler,
+    addCardsHandler,
   };
 
   return <CardsContext.Provider value={cardsContext}>{props.children}</CardsContext.Provider>;

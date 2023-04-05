@@ -2,26 +2,22 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 12em;
+  width: 12em;
   padding: 0.3em;
   border: 1px solid #202581cb;
   border-radius: 8px;
+  text-transform: capitalize;
+  overflow: hidden;
 }
 
-.card.available:hover {
-  filter: drop-shadow(0 0 0.5em #646cffaa);
+.card:hover {
+  filter: drop-shadow(0 0 0.1em #646cff77);
   cursor: pointer;
   border-color: #646cff;
 }
 
 .card__title {
   margin: 0.2em;
-}
-
-.card__title, .card__author {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .card span {

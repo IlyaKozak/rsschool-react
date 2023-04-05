@@ -21,7 +21,9 @@ const Modal: React.FC<ModalProps> = (props) => {
           <div className="backdrop" onClick={props.onClose}></div>
           <div className="modal">
             {props.children}
-            <button onClick={props.onClose}>OK</button>
+            <div className="cross" onClick={props.onClose}>
+              &#10060;
+            </div>
           </div>
         </>,
         document.getElementById('portal')!

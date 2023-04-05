@@ -4,7 +4,7 @@ import { ICardsContext } from '../models/types';
 
 const CardsContext = React.createContext<ICardsContext>({
   cards: [],
-  addCardHandler: () => {},
+  addCardsHandler: () => {},
 });
 
 export default CardsContext;

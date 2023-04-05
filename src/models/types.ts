@@ -32,8 +32,33 @@ export class Card {
   }
 }
 
+export type MiniCardType = {
+  id: number;
+  title: string;
+  author: string;
+  published: number;
+};
+
+export class MiniCard {
+  id: number;
+  title: string;
+  author: string;
+  published: number;
+
+  constructor({ id, title, author, published }: MiniCardType) {
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.published = published;
+  }
+}
+
 export type CardListProps = {
   books: Card[];
+};
+
+export type MiniCardListProps = {
+  books: MiniCard[];
 };
 
 export interface InputProps {
@@ -55,6 +80,13 @@ export type FormProps = {
 };
 
 export interface ICardsContext {
-  cards: Card[];
-  addCardHandler: (card: Card) => void;
+  cards: MiniCard[];
+  addCardsHandler: (cards: MiniCard[]) => void;
 }
+
+export type CardResponse = {
+  _version_: number;
+  title: string;
+  first_publish_year: number;
+  author_name?: string[];
+};
