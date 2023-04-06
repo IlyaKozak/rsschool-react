@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { ICardsContext } from '../models/types';
+import { ICardsContext } from '../types/context';
 
 const CardsContext = React.createContext<ICardsContext>({
+  responseData: [],
+  updateResponseData: () => {},
   cards: [],
-  addCardsHandler: () => {},
+  updateCards: () => {},
 });
 
 export default CardsContext;

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { searchValueKey } from '../../constants/constants';
 import withStorage, { WithStorageProps } from '../../hoc/withStorage';
-import { SearchProps } from '../../models/types';
+import { SearchProps } from '../../types/form';
 import './Search.css';
 
 const Search: React.FC<SearchProps & WithStorageProps> = (props) => {

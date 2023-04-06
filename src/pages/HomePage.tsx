@@ -1,43 +1,65 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import MiniCardList from '../components/Cards/MiniCardList';
 import Loader from '../components/Loader/Loader';
 import Search from '../components/Search/Search';
+import { searchValueKey } from '../constants/constants';
 import CardsContext from '../context/cardsContext';
-import { CardResponse, MiniCard } from '../models/types';
-import filterByRequiredFields from '../utils/filterByRequiredFields';
-import filterByUniqueField from '../utils/filterByUniqueField';
+import useAPI from '../hooks/useAPI';
+import { callbackType } from '../types/api';
+import { MiniCard } from '../types/miniCard';
+import { ResponseData } from '../types/responseData';
 import './HomePage.css';
 
 const HomePage: React.FC = () => {
   const cardsContext = useContext(CardsContext);
-  const [isLoading, setLoading] = useState(false);
-  const { cards } = cardsContext;
+  const { cards, updateCards, updateResponseData } = cardsContext;
+  const [searchValue, setSearchValue] = useState(localStorage.getItem(searchValueKey) ?? '');
+  const { isLoading, sendRequest } = useAPI();
 
-  const searchEventHandler = async (searchValue: string) => {
-    setLoading(true);
-    const response = await fetch(`https://openlibrary.org/search.json?q=${searchValue}&limit=20`);
-    const data = await response.json();
-    setLoading(false);
-    const newCards: MiniCard[] = [];
-    const cards = filterByRequiredFields(
-      filterByUniqueField(data.docs as Array<CardResponse>, '_version_'),
-      ['title', 'first_publish_year']
-    );
+  const transformResponse: callbackType = useCallback(
+    async (data) => {
+      const responseData = data.docs as ResponseData[];
+      updateResponseData(responseData);
 
-    cards?.map((card: CardResponse) => {
-      const { title, author_name, first_publish_year: published, _version_: id } = card;
-      const author = author_name?.slice(0, 2).join(', ');
-      if (!title || !author || !published) return;
-      const newCard = new MiniCard({ id, title, author, published });
-      newCards.push(newCard);
-    });
-    cardsContext.addCardsHandler(newCards);
+      const newCards: MiniCard[] = [];
+
+      responseData?.map((card: ResponseData) => {
+        const { title, author_name, first_publish_year: published, _version_: id } = card;
+        const author = author_name?.slice(0, 2).join(', ');
+        if (!title || !author || !published) return;
+        const newCard = new MiniCard({ id, title, author, published });
+        newCards.push(newCard);
+      });
+
+      updateCards(newCards);
+    },
+    [updateResponseData, updateCards]
+  );
+
+  const onSearchHandler = (searchValue: string) => {
+    setSearchValue(searchValue);
   };
+
+  const getBooks = useCallback(
+    (query: string) =>
+      sendRequest(
+        {
+          url: `https://openlibrary.org/search.json?q=${query}&limit=20`,
+        },
+        transformResponse
+      ),
+    [sendRequest, transformResponse]
+  );
+
+  useEffect(() => {
+    if (!searchValue) return;
+    getBooks(searchValue);
+  }, [searchValue, getBooks]);
 
   return (
     <>
-      <Search onSearch={searchEventHandler} />
+      <Search onSearch={onSearchHandler} />
       <div className="page-container">
         <h1>Books</h1>
         <em>

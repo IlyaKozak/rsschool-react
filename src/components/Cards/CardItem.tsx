@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card } from '../../models/types';
+import { Card } from '../../types/card';
 import './CardItem.css';
 
 const CardItem: React.FC<Card> = (props) => {
