@@ -15,7 +15,7 @@ const HomePage: React.FC = () => {
   const cardsContext = useContext(CardsContext);
   const { cards, updateCards, updateResponseData } = cardsContext;
   const [searchValue, setSearchValue] = useState(localStorage.getItem(searchValueKey) ?? '');
-  const { isLoading, sendRequest } = useAPI();
+  const { isLoading, error, sendRequest } = useAPI();
 
   const transformResponse: callbackType = useCallback(
     async (data) => {
@@ -67,6 +67,7 @@ const HomePage: React.FC = () => {
           <a href="https://openlibrary.org/dev/docs/api/search">Open Library API</a>
         </em>
       </div>
+      {error}
       {isLoading && <Loader />}
       {!isLoading && <MiniCardList books={cards} />}
       {!cards.length && !isLoading && (
