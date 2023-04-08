@@ -13,3 +13,11 @@
   max-height: 40vh;
   object-fit: contain;
 }
+
+i {
+  text-transform: uppercase;
+}
+
+.fullcard__description {
+  white-space: pre-wrap;
+}

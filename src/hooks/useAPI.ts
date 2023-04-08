@@ -1,14 +1,14 @@
 import { useCallback, useState } from 'react';
 
 import { ERROR } from '../constants/constants';
-import { callbackType, requestConfigType } from '../types/api';
+import { DataType, requestConfigType } from '../types/api';
 
 const useAPI = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const sendRequest = useCallback(
-    async (requestConfig: requestConfigType, callback: callbackType) => {
+    async (requestConfig: requestConfigType, callback: (data: DataType) => void) => {
       const { url, method, headers, body } = requestConfig;
       setIsLoading(true);
       setError(null);

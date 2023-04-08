@@ -10,4 +10,19 @@ export type ResponseData = {
   place?: string[];
   ratings_average?: number;
   subject?: string[];
+  key: string;
+};
+
+export type Description = {
+  value: string;
+};
+
+export type Excerpt = {
+  comment: string;
+  excerpt: string;
+};
+
+export type ResponseBookData = {
+  description?: string | Description;
+  excerpts?: Array<Excerpt>;
 };

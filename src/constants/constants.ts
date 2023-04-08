@@ -12,7 +12,7 @@ export const rsschoolTaskURL =
 export const API = {
   OpenLibrary: 'https://openlibrary.org/dev/docs/api/',
   BooksUrl: 'https://openlibrary.org/search.json?q=',
-  BookUrl: '',
+  BookUrl: 'https://openlibrary.org',
   CoversUrl: 'https://covers.openlibrary.org/b/olid/',
   OpenLibraryTest: 'https://openlibrary.org/search.json',
   IncorrectUrl: 'https://incorrect-link',

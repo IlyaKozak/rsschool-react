@@ -1,3 +1,5 @@
+import { Description, Excerpt, ResponseData } from './responseData';
+
 export type requestConfigType = {
   url: string;
   method?: string;
@@ -5,4 +7,10 @@ export type requestConfigType = {
   body?: { [key: string]: string };
 };
 
-export type callbackType = (data: { [key: string]: string | number | [] }) => void;
+export type DataType = {
+  docs: ResponseData[];
+  description?: string | Description;
+  excerpts?: Array<Excerpt>;
+};
+
+export type callbackType<T> = (data: T) => void;

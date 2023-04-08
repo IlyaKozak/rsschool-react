@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1em;
 }
 
 .page-container h1 {
@@ -11,6 +12,10 @@
 .error {
   color: crimson;
   font-size: 1.1em;
+  text-align: center;
+}
+
+.fallback-message {
   text-align: center;
 }
 

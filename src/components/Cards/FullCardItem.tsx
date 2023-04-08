@@ -17,6 +17,7 @@ const FullCardItem: React.FC<FullCard> = (props) => {
     places,
     rating,
     subject,
+    description,
   } = props;
   const [isLoading, setLoading] = useState(true);
   const [imgSrc, setImgSrc] = useState('');
@@ -52,6 +53,22 @@ const FullCardItem: React.FC<FullCard> = (props) => {
           <i>Pages:</i> {pages}
         </span>
       )}
+      {description && (
+        <>
+          <hr />
+          <span className="fullcard__description">
+            <i>Description: </i> {description}
+          </span>
+        </>
+      )}
+      {firstSentence && (
+        <>
+          <hr />
+          <span>
+            <i>First sentence:</i> {firstSentence}
+          </span>
+        </>
+      )}
       {subject && (
         <span>
           <i>Subject:</i> {subject}
@@ -65,11 +82,6 @@ const FullCardItem: React.FC<FullCard> = (props) => {
       {places && (
         <span>
           <i>Places:</i> {places}
-        </span>
-      )}
-      {firstSentence && (
-        <span>
-          <i>First sentence:</i> {firstSentence}
         </span>
       )}
     </article>

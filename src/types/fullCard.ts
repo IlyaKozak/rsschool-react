@@ -1,5 +1,5 @@
 export type FullCardType = {
-  id: number;
+  id: string;
   title: string | undefined;
   published: number | undefined;
   author: string | undefined;
@@ -10,10 +10,11 @@ export type FullCardType = {
   places: string | undefined;
   rating: string | undefined;
   subject: string | undefined;
+  description: string | undefined;
 };
 
 export class FullCard {
-  id: number;
+  id: string;
   title: string | undefined;
   published: number | undefined;
   author: string | undefined;
@@ -24,6 +25,7 @@ export class FullCard {
   places: string | undefined;
   rating: string | undefined;
   subject: string | undefined;
+  description: string | undefined;
 
   constructor({
     id,
@@ -37,6 +39,7 @@ export class FullCard {
     places,
     rating,
     subject,
+    description,
   }: FullCardType) {
     this.id = id;
     this.title = title;
@@ -49,5 +52,6 @@ export class FullCard {
     this.places = places;
     this.rating = rating;
     this.subject = subject;
+    this.description = description;
   }
 }

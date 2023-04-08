@@ -1,6 +1,6 @@
 import { ChangeHandler } from 'react-hook-form';
 
-import { Card } from './context';
+import { Card } from './card';
 
 export interface InputProps {
   text?: string;

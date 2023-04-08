@@ -6,7 +6,6 @@ import Search from '../components/Search/Search';
 import { API, searchValueKey } from '../constants/constants';
 import CardsContext from '../context/cardsContext';
 import useAPI from '../hooks/useAPI';
-import { callbackType } from '../types/api';
 import { MiniCard } from '../types/miniCard';
 import { ResponseData } from '../types/responseData';
 import './HomePage.css';
@@ -17,14 +16,14 @@ const HomePage: React.FC = () => {
   const [searchValue, setSearchValue] = useState(localStorage.getItem(searchValueKey) ?? '');
   const { isLoading, error, sendRequest } = useAPI();
 
-  const transformResponse: callbackType = useCallback(
-    async (data) => {
+  const transformResponse = useCallback(
+    async (data: { docs: ResponseData[] }) => {
       const responseData = data.docs as ResponseData[];
       updateResponseData(responseData);
 
       const newCards: MiniCard[] = [];
       responseData?.map((card: ResponseData) => {
-        const { title, author_name, first_publish_year: published, _version_: id } = card;
+        const { title, author_name, first_publish_year: published, key: id } = card;
         const author = author_name?.slice(0, 2).join(', ');
         if (!title || !author || !published) return;
         const newCard = new MiniCard({ id, title, author, published });
@@ -70,7 +69,9 @@ const HomePage: React.FC = () => {
       {isLoading && <Loader />}
       {!isLoading && !error && <MiniCardList books={cards} />}
       {!cards.length && !isLoading && !error && (
-        <p>No search results. Please type search query and press Enter...</p>
+        <p className="fallback-message">
+          No search results. Please type new search query and press Enter...
+        </p>
       )}
     </>
   );
