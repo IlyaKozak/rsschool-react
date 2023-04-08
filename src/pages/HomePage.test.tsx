@@ -1,72 +1,43 @@
-// import { render, screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-// import HomePage from '../pages/HomePage';
+import CardsProvider from '../context/cardsProvider';
 
-// describe('HomePage', () => {
-  // it('renders loader after entering search query', async () => {
-  //   const user = userEvent.setup();
+import HomePage from '../pages/HomePage';
 
-  //   render(<HomePage />);
-  //   const search = screen.getByPlaceholderText(/search/i);
-  //   user.type(search, 'harry{enter}');
-  //   expect(await screen.findByTestId('loader')).toBeInTheDocument();
-  // });
+describe('HomePage', () => {
+  it('renders loader after entering search query', async () => {
+    const user = userEvent.setup();
 
-  // it('removes loader after loading complete', async () => {
-  //   const user = userEvent.setup();
+    render(<HomePage />);
+    const search = screen.getByPlaceholderText(/search/i);
+    user.type(search, 'harry{enter}');
 
-  //   render(<HomePage />);
-  //   const search = screen.getByPlaceholderText(/search/i);
-  //   user.type(search, 'harry{enter}');
+    expect(await screen.findByTestId('loader')).toBeInTheDocument();
+  });
 
-  //   await waitForElementToBeRemoved(await screen.findByTestId('loader'));
-  // });
+  it('removes no search results text after entering search query', async () => {
+    const user = userEvent.setup();
 
-  // it('renders cards returns by API', async () => {
-  //   const user = userEvent.setup();
+    render(<HomePage />);
+    const search = screen.getByPlaceholderText(/search/i);
+    user.type(search, 'harry{enter}');
 
-  //   render(
-  //     <CardsProvider>
-  //       <HomePage />
-  //     </CardsProvider>
-  //   );
-  //   const search = screen.getByPlaceholderText(/search/i);
-  //   user.type(search, 'harry{enter}');
+    await waitForElementToBeRemoved(() => screen.queryByText(/no search results/i));
+  });
 
-  //   expect(await screen.findAllByText(/harry/i)).toBeInTheDocument();
-  //   screen.debug();
-  // await waitForElementToBeRemoved(screen.queryByText(/no search results/i));
-  // await waitForElementToBeRemoved(await screen.findByTestId('loader'));
+  it('renders cards from API for searh query (harry)', async () => {
+    const user = userEvent.setup();
 
-  // await waitFor(() => {
-  //   // screen.debug();
-  //   expect(screen.getByTestId('loader')).toBeInTheDocument();
-  // });
+    render(
+      <CardsProvider>
+        <HomePage />
+      </CardsProvider>
+    );
+    const search = screen.getByPlaceholderText(/search/i);
+    user.type(search, 'harry{enter}');
 
-  // await waitFor(() => {
-  //   // screen.debug();
-  //   expect(screen.queryByText(/harry/i)).toBeInTheDocument();
-  // });
-  // screen.debug();
-  // expect(await screen.findByTestId('loader')).toBeInTheDocument();
-  // });
-
-  // it('loader disappears after entering search query', async () => {
-  //   const user = userEvent.setup();
-
-  //   render(<HomePage />);
-  //   const search = screen.getByPlaceholderText(/search/i);
-  //   user.type(search, 'harry{enter}');
-  //   // expect(await screen.findAllByText(/harry/i)).toBeInTheDocument();
-
-  //   await waitFor(() => {
-  //     screen.debug();
-  //   });
-
-  //   await waitFor(() => {
-  //     screen.debug();
-  //     expect(screen.queryByText(/harry/i)).toBeInTheDocument();
-  //   });
-  // });
-// });
+    const HARRY_TEXT_APPEAR_ON_PAGE = 21;
+    expect(await screen.findAllByText(/harry/i)).toHaveLength(HARRY_TEXT_APPEAR_ON_PAGE);
+  });
+});

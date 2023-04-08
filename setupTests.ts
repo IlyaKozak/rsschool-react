@@ -5,6 +5,10 @@ import './testServer';
 
 expect.extend(matchers);
 
+beforeEach(() => {
+  localStorage.clear();
+});
+
 afterEach(() => {
   cleanup();
 });
