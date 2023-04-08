@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import MiniCardList from '../components/Cards/MiniCardList';
 import Loader from '../components/Loader/Loader';
 import Search from '../components/Search/Search';
-import { searchValueKey } from '../constants/constants';
+import { API, searchValueKey } from '../constants/constants';
 import CardsContext from '../context/cardsContext';
 import useAPI from '../hooks/useAPI';
 import { callbackType } from '../types/api';
@@ -23,7 +23,6 @@ const HomePage: React.FC = () => {
       updateResponseData(responseData);
 
       const newCards: MiniCard[] = [];
-
       responseData?.map((card: ResponseData) => {
         const { title, author_name, first_publish_year: published, _version_: id } = card;
         const author = author_name?.slice(0, 2).join(', ');
@@ -45,7 +44,7 @@ const HomePage: React.FC = () => {
     (query: string) =>
       sendRequest(
         {
-          url: `https://openlibrary.org/search.json?q=${query}&limit=20`,
+          url: `${API.BooksUrl}${query}&limit=20`,
         },
         transformResponse
       ),
@@ -64,13 +63,13 @@ const HomePage: React.FC = () => {
         <h1>Books</h1>
         <em>
           Search results from&nbsp;
-          <a href="https://openlibrary.org/dev/docs/api/search">Open Library API</a>
+          <a href={`${API.OpenLibrary}`}>Open Library API</a>
         </em>
       </div>
-      {error}
+      <div className="error">{error}</div>
       {isLoading && <Loader />}
-      {!isLoading && <MiniCardList books={cards} />}
-      {!cards.length && !isLoading && (
+      {!isLoading && !error && <MiniCardList books={cards} />}
+      {!cards.length && !isLoading && !error && (
         <p>No search results. Please type search query and press Enter...</p>
       )}
     </>

@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 
+import { ERROR } from '../constants/constants';
 import { callbackType, requestConfigType } from '../types/api';
 
 const useAPI = () => {
@@ -20,14 +21,17 @@ const useAPI = () => {
         });
 
         if (!response.ok) {
-          throw new Error('Request failed!');
+          throw new Error(ERROR.BAD_REQUEST);
         }
 
         const data = await response.json();
         callback(data);
-      } catch (error) {
-        if (!(error instanceof Error)) return;
-        setError(error.message || 'Something went wrong!');
+      } catch (err) {
+        let message = ERROR.MESSAGE;
+        if (err instanceof Error) {
+          message = err.message;
+        }
+        setError(message);
       }
       setIsLoading(false);
     },

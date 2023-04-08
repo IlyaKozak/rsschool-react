@@ -19,7 +19,7 @@ const Modal: React.FC<ModalProps> = (props) => {
       {ReactDOM.createPortal(
         <>
           <div className="backdrop" onClick={props.onClose}></div>
-          <div className="modal">
+          <div className="modal" data-testid="modal">
             {props.children}
             <div className="cross" onClick={props.onClose}>
               &#10060;

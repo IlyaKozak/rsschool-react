@@ -35,7 +35,7 @@ const CardList: React.FC<MiniCardListProps> = (props) => {
 
   return (
     <>
-      <section className="cardList">
+      <section className="cardList" data-testid="cardList">
         {books.map((book) => (
           <MiniCardItem key={book.id} {...book} onClick={showFullCardHandler} />
         ))}

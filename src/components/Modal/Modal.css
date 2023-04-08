@@ -50,9 +50,12 @@
 
 .cross {
   position: absolute;
-  top: 0.75em;
-  right: 0.75em;
+  top: 0.7em;
+  right: 0.7em;
   white-space: pre-line;
+  padding: 0.2em;
+  border-radius: 50%;
+  background-color: #e0e0e0;
 }
 
 .cross:hover {
