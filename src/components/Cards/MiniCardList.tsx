@@ -15,7 +15,7 @@ import './CardList.css';
 const MiniCardList: React.FC<MiniCardListProps> = (props) => {
   const cardsContext = useContext(CardsContext);
   const { responseData } = cardsContext;
-  const { isLoading, sendRequest } = useAPI();
+  const { isLoading, error, sendRequest } = useAPI();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fullCard, setFullCard] = useState<FullCard>();
   const { books } = props;
@@ -71,8 +71,9 @@ const MiniCardList: React.FC<MiniCardListProps> = (props) => {
           <MiniCardItem key={book.id} {...book} onClick={showFullCardHandler} />
         ))}
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          {error && <p className="error-message">{error}</p>}
           {isLoading && <Loader />}
-          {!isLoading && fullCard && <FullCardItem key={fullCard.id} {...fullCard} />}
+          {!isLoading && !error && fullCard && <FullCardItem key={fullCard.id} {...fullCard} />}
         </Modal>
       </section>
     </>
