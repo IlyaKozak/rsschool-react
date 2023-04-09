@@ -29,7 +29,7 @@ const HomePage: React.FC = () => {
         const newCard = new MiniCard({ id, title, author, published });
         newCards.push(newCard);
       });
-
+      console.log(newCards);
       updateCards(newCards);
     },
     [updateResponseData, updateCards]

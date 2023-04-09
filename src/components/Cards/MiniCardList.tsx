@@ -12,7 +12,7 @@ import Loader from '../Loader/Loader';
 import Modal from '../Modal/Modal';
 import './CardList.css';
 
-const CardList: React.FC<MiniCardListProps> = (props) => {
+const MiniCardList: React.FC<MiniCardListProps> = (props) => {
   const cardsContext = useContext(CardsContext);
   const { responseData } = cardsContext;
   const { isLoading, sendRequest } = useAPI();
@@ -79,4 +79,4 @@ const CardList: React.FC<MiniCardListProps> = (props) => {
   );
 };
 
-export default CardList;
+export default MiniCardList;
