@@ -40,7 +40,7 @@ const MiniCardList: React.FC<MiniCardListProps> = (props) => {
       }
       let firstSentence = card?.first_sentence?.at(0);
       if (data.excerpts && data.excerpts[0].excerpt) {
-        firstSentence = data.excerpts[0].excerpt;
+        firstSentence = Object.values(data.excerpts[0].excerpt).join('');
       }
 
       const newFullCard = new FullCard({
