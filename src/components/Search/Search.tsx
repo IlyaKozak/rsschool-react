@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import { searchValueKey } from '../../constants/constants';
 import withStorage, { WithStorageProps } from '../../hoc/withStorage';
@@ -9,30 +9,16 @@ const Search: React.FC<SearchProps & WithStorageProps> = (props) => {
   const { getValue, setValue, onSearch } = props;
   const storedSearchValue = getValue() ?? '';
   const [searchValue, setSearchValue] = useState(storedSearchValue);
-  const searchValueRef = useRef('');
-
-  const updateInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-  };
-
-  const setValueOnCleanup = useCallback(() => {
-    if (storedSearchValue !== searchValueRef.current) {
-      setValue(searchValueRef.current);
-    }
-  }, [storedSearchValue, setValue]);
-
-  useEffect(() => {
-    searchValueRef.current = searchValue;
-  }, [searchValue]);
-
-  useEffect(() => {
-    return setValueOnCleanup;
-  }, [setValueOnCleanup]);
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    onSearch(searchValueRef.current);
+    onSearch(searchValue);
+    setValue(searchValue);
     setSearchValue('');
+  };
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
   };
 
   return (
@@ -41,7 +27,7 @@ const Search: React.FC<SearchProps & WithStorageProps> = (props) => {
         type="search"
         placeholder="&#128269; Search here … Press Enter"
         value={searchValue}
-        onChange={updateInputValue}
+        onChange={onChange}
       />
     </form>
   );
