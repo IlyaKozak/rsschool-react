@@ -51,7 +51,6 @@ const HomePage: React.FC = () => {
   );
 
   useEffect(() => {
-    if (!searchValue) return;
     getBooks(searchValue);
   }, [searchValue, getBooks]);
 
