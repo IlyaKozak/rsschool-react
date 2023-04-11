@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { InputProps } from '../../models/types';
+import { InputProps } from '../../types/form';
 import withForwardRef from '../../hoc/withForwardRef';
 
 const RadioInput: React.FC<InputProps> = (props) => {

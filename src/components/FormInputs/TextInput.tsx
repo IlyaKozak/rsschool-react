@@ -1,7 +1,7 @@
 import React from 'react';
 
 import withForwardRef from '../../hoc/withForwardRef';
-import { InputProps } from '../../models/types';
+import { InputProps } from '../../types/form';
 
 const TextInput: React.FC<InputProps> = (props) => {
   const { validationText, name, onChange, forwardRef } = props;

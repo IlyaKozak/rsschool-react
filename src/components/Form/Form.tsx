@@ -17,7 +17,8 @@ import {
   imageRegisterOptions,
 } from './formRegisterOptions';
 import { bookCovers, booksGenres } from '../../mock/books';
-import { Card, FormProps } from '../../models/types';
+import { FormProps } from '../../types/form';
+import { Card } from '../../types/card';
 import './Form.css';
 
 const Form: React.FC<FormProps> = (props) => {

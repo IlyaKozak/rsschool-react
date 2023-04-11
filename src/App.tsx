@@ -15,7 +15,7 @@ export const routes = [
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: pagePath.Home, element: <HomePage /> },
+      { index: true, element: <HomePage /> },
       { path: pagePath.About, element: <AboutPage /> },
       { path: pagePath.Form, element: <FormPage /> },
     ],

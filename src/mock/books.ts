@@ -1,4 +1,4 @@
-import { Card } from '../models/types';
+import { Card } from '../types/card';
 
 export const books: Card[] = [
   {

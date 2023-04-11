@@ -1,5 +1,3 @@
-import { ChangeHandler } from 'react-hook-form';
-
 export type CardType = {
   title: string;
   author: string;
@@ -35,22 +33,3 @@ export class Card {
 export type CardListProps = {
   books: Card[];
 };
-
-export interface InputProps {
-  text?: string;
-  validationText: string;
-  items?: string[];
-  name: string;
-  forwardRef: React.Ref<HTMLElement>;
-  onChange: ChangeHandler;
-  onBlur: ChangeHandler;
-}
-
-export type FormProps = {
-  onCardAdd: (card: Card) => void;
-};
-
-export interface ICardsContext {
-  cards: Card[];
-  addCardHandler: (card: Card) => void;
-}

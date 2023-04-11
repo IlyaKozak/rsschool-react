@@ -1,19 +1,26 @@
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useCallback, useState } from 'react';
 
 import CardsContext from './cardsContext';
-import { Card } from '../models/types';
-import { books } from '../mock/books';
+import { MiniCard } from '../types/miniCard';
+import { ResponseData } from '../types/responseData';
 
 const CardsProvider = (props: PropsWithChildren) => {
-  const [cards, setCards] = useState<Card[]>([...books]);
+  const [responseData, setResponseData] = useState<ResponseData[]>([]);
+  const [cards, setCards] = useState<MiniCard[]>([]);
 
-  const addCardHandler = (card: Card) => {
-    setCards((prevCards) => [...prevCards, card]);
-  };
+  const updateCards = useCallback((cards: MiniCard[]) => {
+    setCards(cards);
+  }, []);
+
+  const updateResponseData = useCallback((data: ResponseData[]) => {
+    setResponseData(data);
+  }, []);
 
   const cardsContext = {
+    responseData,
+    updateResponseData,
     cards,
-    addCardHandler,
+    updateCards,
   };
 
   return <CardsContext.Provider value={cardsContext}>{props.children}</CardsContext.Provider>;

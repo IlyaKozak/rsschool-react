@@ -1,0 +1,26 @@
+.page-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.page-container h1 {
+  margin: 0;
+}
+
+.error {
+  color: crimson;
+  font-size: 1.1em;
+  text-align: center;
+}
+
+.fallback-message {
+  text-align: center;
+}
+
+@media (max-width: 500px) {
+  .page-container {
+    flex-direction: column;
+  }
+}

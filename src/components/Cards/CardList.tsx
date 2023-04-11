@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CardListProps } from '../../models/types';
+import { CardListProps } from '../../types/card';
 import CardItem from './CardItem';
 import './CardList.css';
 

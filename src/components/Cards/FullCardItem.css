@@ -1,0 +1,23 @@
+.fullcard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.3em;
+  max-width: 80vw;
+  max-height: 80vh;
+  text-transform: capitalize;
+  overflow: auto;
+}
+
+.fullcard__cover {
+  max-height: 40vh;
+  object-fit: contain;
+}
+
+i {
+  text-transform: uppercase;
+}
+
+.fullcard__description {
+  white-space: pre-wrap;
+}
