@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { searchActions } from '../../store/search-slice';
+import { searchActions } from '../../store/searchSlice';
 import { RootState } from '../../store';
 import './Search.css';
 

@@ -15,11 +15,7 @@ const CardItem: React.FC<Card> = (props) => {
       </em>
       <time>
         Published:&nbsp;
-        {published.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-        })}
+        {published}
       </time>
       <hr />
       <span>Cover: {bookcover}</span>
