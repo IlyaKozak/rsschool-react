@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { searchValueKey } from '../../constants/constants';
-import withStorage, { WithStorageProps } from '../../hoc/withStorage';
-import { SearchProps } from '../../types/form';
+import { searchActions } from '../../store/search-slice';
+import { RootState } from '../../store';
 import './Search.css';
 
-const Search: React.FC<SearchProps & WithStorageProps> = (props) => {
-  const { getValue, setValue, onSearch } = props;
-  const storedSearchValue = getValue() ?? '';
+const Search: React.FC<{ disabled: boolean }> = (props) => {
+  const { disabled } = props;
+  const storedSearchValue = useSelector((state: RootState) => state.search.searchValue);
   const [searchValue, setSearchValue] = useState(storedSearchValue);
+  const dispatch = useDispatch();
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    onSearch(searchValue);
-    setValue(searchValue);
+    dispatch(searchActions.setSearchValue(searchValue));
     setSearchValue('');
   };
 
@@ -28,9 +28,10 @@ const Search: React.FC<SearchProps & WithStorageProps> = (props) => {
         placeholder="&#128269; Search here … Press Enter"
         value={searchValue}
         onChange={onChange}
+        disabled={disabled}
       />
     </form>
   );
 };
 
-export default withStorage(Search, localStorage, searchValueKey);
+export default Search;

@@ -1,19 +1,21 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import MiniCardList from '../components/Cards/MiniCardList';
 import Loader from '../components/Loader/Loader';
 import Search from '../components/Search/Search';
-import { API, searchValueKey } from '../constants/constants';
+import { API } from '../constants/constants';
 import CardsContext from '../context/cardsContext';
 import useAPI from '../hooks/useAPI';
+import { RootState } from '../store';
 import { MiniCard } from '../types/miniCard';
 import { ResponseData } from '../types/responseData';
 import './HomePage.css';
 
 const HomePage: React.FC = () => {
   const cardsContext = useContext(CardsContext);
+  const storedSearchValue = useSelector((state: RootState) => state.search.searchValue);
   const { cards, updateCards, updateResponseData } = cardsContext;
-  const [searchValue, setSearchValue] = useState(localStorage.getItem(searchValueKey) ?? '');
   const { isLoading, error, sendRequest } = useAPI();
 
   const transformResponse = useCallback(
@@ -35,10 +37,6 @@ const HomePage: React.FC = () => {
     [updateResponseData, updateCards]
   );
 
-  const onSearchHandler = (searchValue: string) => {
-    setSearchValue(searchValue);
-  };
-
   const getBooks = useCallback(
     (query: string) =>
       sendRequest(
@@ -51,12 +49,12 @@ const HomePage: React.FC = () => {
   );
 
   useEffect(() => {
-    getBooks(searchValue);
-  }, [searchValue, getBooks]);
+    getBooks(storedSearchValue);
+  }, [storedSearchValue, getBooks]);
 
   return (
     <>
-      <Search onSearch={onSearchHandler} />
+      <Search disabled={isLoading} />
       <div className="page-container">
         <h1>Books</h1>
         <em>
