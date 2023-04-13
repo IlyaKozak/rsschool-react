@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 
 import { rest, server } from '../../../testServer';
-import { API } from '../../constants/constants';
+import { API } from '../../constants/api';
 import CardsContext from '../../context/cardsContext';
 import { apiResponse } from '../../mock/apiResponse';
 import { miniCards } from '../../mock/cards';

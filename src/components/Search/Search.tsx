@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { searchActions } from '../../store/searchSlice';
+import {
+  setSearchValue as setStoreSearchValue,
+  setInitialSearchInput,
+} from '../../store/searchSlice';
 import { RootState } from '../../store';
 import './Search.css';
 
@@ -15,7 +18,7 @@ const Search: React.FC<{ disabled: boolean }> = (props) => {
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    dispatch(searchActions.setSearchValue(searchValue));
+    dispatch(setStoreSearchValue(searchValue));
     searchValueRef.current = '';
     setSearchValue('');
   };
@@ -28,7 +31,7 @@ const Search: React.FC<{ disabled: boolean }> = (props) => {
 
   const setValueOnCleanup = useCallback(() => {
     if (storedSearchValue !== searchValueRef.current) {
-      dispatch(searchActions.setInitialSearchInput(searchValue));
+      dispatch(setInitialSearchInput(searchValue));
     }
   }, [storedSearchValue, dispatch, searchValue]);
 

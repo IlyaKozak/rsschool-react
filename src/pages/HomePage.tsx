@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import MiniCardList from '../components/Cards/MiniCardList';
 import Loader from '../components/Loader/Loader';
 import Search from '../components/Search/Search';
-import { API } from '../constants/constants';
+import { API } from '../constants/api';
 import CardsContext from '../context/cardsContext';
-import useAPI from '../hooks/useAPI';
+import { useSearchBooksQuery } from '../services/openLibraryApi';
 import { RootState } from '../store';
 import { MiniCard } from '../types/miniCard';
 import { ResponseData } from '../types/responseData';
@@ -15,12 +15,12 @@ import './HomePage.css';
 const HomePage: React.FC = () => {
   const cardsContext = useContext(CardsContext);
   const storedSearchValue = useSelector((state: RootState) => state.search.searchValue);
+  const { data, isError, error, isFetching } = useSearchBooksQuery(storedSearchValue);
   const { cards, updateCards, updateResponseData } = cardsContext;
-  const { isLoading, error, sendRequest } = useAPI();
 
   const transformResponse = useCallback(
     async (data: { docs: ResponseData[] }) => {
-      const responseData = data.docs as ResponseData[];
+      const responseData = data?.docs as ResponseData[];
       updateResponseData(responseData);
 
       const newCards: MiniCard[] = [];
@@ -37,24 +37,14 @@ const HomePage: React.FC = () => {
     [updateResponseData, updateCards]
   );
 
-  const getBooks = useCallback(
-    (query: string) =>
-      sendRequest(
-        {
-          url: `${API.BooksUrl}${query}&limit=20`,
-        },
-        transformResponse
-      ),
-    [sendRequest, transformResponse]
-  );
-
   useEffect(() => {
-    getBooks(storedSearchValue);
-  }, [storedSearchValue, getBooks]);
+    if (!data) return;
+    transformResponse(data);
+  }, [data, transformResponse]);
 
   return (
     <>
-      <Search disabled={isLoading} />
+      <Search disabled={isFetching} />
       <div className="page-container">
         <h1>Books</h1>
         <em>
@@ -62,13 +52,13 @@ const HomePage: React.FC = () => {
           <a href={`${API.OpenLibrary}`}>Open Library API</a>
         </em>
       </div>
-      <div className="error">{error}</div>
-      {isLoading && <Loader />}
-      {cards.length > 0 && !isLoading && !error && (
+      {isError && 'error' in error && <div className="error">{error.error}</div>}
+      {isFetching && <Loader />}
+      {cards.length > 0 && !isFetching && !isError && (
         <p>Search text [saved on submit]: {storedSearchValue}</p>
       )}
-      {!isLoading && !error && <MiniCardList books={cards} />}
-      {!cards.length && !isLoading && !error && (
+      {!isFetching && !isError && <MiniCardList books={cards} />}
+      {!cards.length && !isFetching && !isError && (
         <p className="fallback-message">
           No search results for search text &quot;{storedSearchValue}&quot;. Please type new search
           query and press Enter...

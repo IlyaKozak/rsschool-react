@@ -7,7 +7,9 @@ import HomePage from '../pages/HomePage';
 import store from '../store';
 
 describe('HomePage', () => {
-  it('removes loader after initial search query', async () => {
+  it('renders loader after entering search query', async () => {
+    const user = userEvent.setup();
+
     render(
       <Provider store={store}>
         <CardsProvider>
@@ -15,7 +17,11 @@ describe('HomePage', () => {
         </CardsProvider>
       </Provider>
     );
-    expect(await screen.findByTestId('loader')).not.toBeInTheDocument();
+
+    const search = screen.getByPlaceholderText(/search/i);
+    user.type(search, 'harry{enter}');
+
+    expect(await screen.findByTestId('loader')).toBeInTheDocument();
   });
 
   it('renders cards from API for searh query (harry)', async () => {

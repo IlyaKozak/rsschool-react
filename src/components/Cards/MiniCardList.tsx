@@ -6,7 +6,7 @@ import { FullCard } from '../../types/fullCard';
 import MiniCardItem from './MiniCardItem';
 import CardsContext from '../../context/cardsContext';
 import FullCardItem from './FullCardItem';
-import { API } from '../../constants/constants';
+import { API } from '../../constants/api';
 import useAPI from '../../hooks/useAPI';
 import Loader from '../Loader/Loader';
 import Modal from '../Modal/Modal';

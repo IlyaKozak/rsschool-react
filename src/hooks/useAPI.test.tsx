@@ -1,6 +1,7 @@
 import { act, renderHook } from '@testing-library/react';
 
-import { API, ERROR } from '../constants/constants';
+import { API } from '../constants/api';
+import { ERROR } from '../constants/constants';
 import { apiResponse } from '../mock/apiResponse';
 import useAPI from './useAPI';
 import { server, rest } from '../../testServer';

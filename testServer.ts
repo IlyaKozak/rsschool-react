@@ -2,7 +2,7 @@ import 'whatwg-fetch';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
-import { API } from './src/constants/constants';
+import { API } from './src/constants/api';
 import { apiResponse } from './src/mock/apiResponse';
 
 const server = setupServer(

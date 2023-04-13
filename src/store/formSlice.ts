@@ -13,6 +13,6 @@ const formSlice = createSlice({
   },
 });
 
-export const formActions = formSlice.actions;
+export const { addFormCard } = formSlice.actions;
 
 export default formSlice;

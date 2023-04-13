@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { API } from '../../constants/constants';
+import { API } from '../../constants/api';
 
 import { FullCard } from '../../types/fullCard';
 import Loader from '../Loader/Loader';

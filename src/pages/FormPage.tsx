@@ -5,7 +5,7 @@ import Form from '../components/Form/Form';
 import CardList from '../components/Cards/CardList';
 import { Card } from '../types/card';
 import { RootState } from '../store';
-import { formActions } from '../store/formSlice';
+import { addFormCard } from '../store/formSlice';
 import serialize from '../utils/serialize';
 
 const FormPage: React.FC = () => {
@@ -13,7 +13,7 @@ const FormPage: React.FC = () => {
   const dispatch = useDispatch();
 
   const addFormCardHandler = (card: Card) => {
-    dispatch(formActions.addFormCard(serialize(card)));
+    dispatch(addFormCard(serialize(card)));
   };
 
   return (

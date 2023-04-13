@@ -15,6 +15,6 @@ const searchSlice = createSlice({
   },
 });
 
-export const searchActions = searchSlice.actions;
+export const { setSearchValue, setInitialSearchInput } = searchSlice.actions;
 
 export default searchSlice;
