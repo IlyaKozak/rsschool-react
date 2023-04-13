@@ -64,10 +64,14 @@ const HomePage: React.FC = () => {
       </div>
       <div className="error">{error}</div>
       {isLoading && <Loader />}
+      {cards.length > 0 && !isLoading && !error && (
+        <p>Search text [saved on submit]: {storedSearchValue}</p>
+      )}
       {!isLoading && !error && <MiniCardList books={cards} />}
       {!cards.length && !isLoading && !error && (
         <p className="fallback-message">
-          No search results. Please type new search query and press Enter...
+          No search results for search text &quot;{storedSearchValue}&quot;. Please type new search
+          query and press Enter...
         </p>
       )}
     </>

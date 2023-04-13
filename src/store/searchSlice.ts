@@ -4,10 +4,13 @@ import { SLICE } from '../constants/store';
 
 const searchSlice = createSlice({
   name: SLICE.search,
-  initialState: { searchValue: '' },
+  initialState: { searchValue: '', initialSearchInput: '' },
   reducers: {
     setSearchValue(state, action: PayloadAction<string>) {
       state.searchValue = action.payload;
+    },
+    setInitialSearchInput(state, action: PayloadAction<string>) {
+      state.initialSearchInput = action.payload;
     },
   },
 });
