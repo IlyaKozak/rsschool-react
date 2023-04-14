@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { OPEN_LIBRARY_API } from '../constants/api';
-import { ResponseData } from '../types/responseData';
+import { ResponseBookData, ResponseData } from '../types/responseData';
 
 export const openLibraryApi = createApi({
   reducerPath: 'openLibraryApi',
@@ -13,7 +13,10 @@ export const openLibraryApi = createApi({
       query: (searchValue) =>
         `${OPEN_LIBRARY_API.searchEndpoint}${searchValue}${OPEN_LIBRARY_API.searchLimit}`,
     }),
+    getBookByKey: builder.query<ResponseBookData, string>({
+      query: (bookKey) => `${OPEN_LIBRARY_API.bookEndpoint}${bookKey}.json`,
+    }),
   }),
 });
 
-export const { useSearchBooksQuery } = openLibraryApi;
+export const { useSearchBooksQuery, useLazyGetBookByKeyQuery } = openLibraryApi;

@@ -1,11 +1,10 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import MiniCardList from '../components/Cards/MiniCardList';
 import Loader from '../components/Loader/Loader';
 import Search from '../components/Search/Search';
 import { API } from '../constants/api';
-import CardsContext from '../context/cardsContext';
 import { useSearchBooksQuery } from '../services/openLibraryApi';
 import { RootState } from '../store';
 import { MiniCard } from '../types/miniCard';
@@ -13,29 +12,26 @@ import { ResponseData } from '../types/responseData';
 import './HomePage.css';
 
 const HomePage: React.FC = () => {
-  const cardsContext = useContext(CardsContext);
+  const [cards, setCards] = useState<MiniCard[]>([]);
   const storedSearchValue = useSelector((state: RootState) => state.search.searchValue);
   const { data, isError, error, isFetching } = useSearchBooksQuery(storedSearchValue);
-  const { cards, updateCards, updateResponseData } = cardsContext;
 
-  const transformResponse = useCallback(
-    async (data: { docs: ResponseData[] }) => {
-      const responseData = data?.docs as ResponseData[];
-      updateResponseData(responseData);
+  const transformResponse = useCallback(async (data: { docs: ResponseData[] }) => {
+    const responseData = data?.docs as ResponseData[];
 
-      const newCards: MiniCard[] = [];
-      responseData?.map((card: ResponseData) => {
-        const { title, author_name, first_publish_year: published, key: id } = card;
-        const author = author_name?.slice(0, 2).join(', ');
-        if (!title || !author || !published) return;
-        const newCard = new MiniCard({ id, title, author, published });
-        newCards.push(newCard);
-      });
+    const newCards: MiniCard[] = [];
+    responseData?.map((card: ResponseData) => {
+      const { title, author_name, first_publish_year: published, key: id } = card;
+      const author = author_name?.slice(0, 2).join(', ');
+      if (!title || !author || !published) return;
+      const newCard = new MiniCard({ id, title, author, published });
+      newCards.push(newCard);
+    });
 
-      updateCards(newCards);
-    },
-    [updateResponseData, updateCards]
-  );
+    setCards(newCards);
+  }, []);
+
+  useEffect(() => setCards([]), [storedSearchValue]);
 
   useEffect(() => {
     if (!data) return;
@@ -54,16 +50,19 @@ const HomePage: React.FC = () => {
       </div>
       {isError && 'error' in error && <div className="error">{error.error}</div>}
       {isFetching && <Loader />}
-      {cards.length > 0 && !isFetching && !isError && (
-        <p>Search text [saved on submit]: {storedSearchValue}</p>
-      )}
-      {!isFetching && !isError && <MiniCardList books={cards} />}
-      {!cards.length && !isFetching && !isError && (
-        <p className="fallback-message">
-          No search results for search text &quot;{storedSearchValue}&quot;. Please type new search
-          query and press Enter...
-        </p>
-      )}
+      {!isFetching &&
+        !isError &&
+        (cards.length > 0 ? (
+          <>
+            <p>Search text [saved on submit]: {storedSearchValue}</p>
+            <MiniCardList books={cards} />
+          </>
+        ) : (
+          <p className="fallback-message">
+            No search results for search text &quot;{storedSearchValue}&quot;. Please type new
+            search query and press Enter...
+          </p>
+        ))}
     </>
   );
 };

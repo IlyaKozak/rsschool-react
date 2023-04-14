@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 
-import CardsProvider from '../context/cardsProvider';
 import HomePage from '../pages/HomePage';
 import store from '../store';
 
@@ -12,9 +11,7 @@ describe('HomePage', () => {
 
     render(
       <Provider store={store}>
-        <CardsProvider>
-          <HomePage />
-        </CardsProvider>
+        <HomePage />
       </Provider>
     );
 
@@ -29,9 +26,7 @@ describe('HomePage', () => {
 
     render(
       <Provider store={store}>
-        <CardsProvider>
-          <HomePage />
-        </CardsProvider>
+        <HomePage />
       </Provider>
     );
     const search = screen.getByPlaceholderText(/search/i);

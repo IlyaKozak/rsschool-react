@@ -11,4 +11,5 @@ export const OPEN_LIBRARY_API = {
   baseQuery: 'https://openlibrary.org/',
   searchEndpoint: '/search.json?q=',
   searchLimit: '&limit=20',
+  bookEndpoint: 'https://openlibrary.org',
 };

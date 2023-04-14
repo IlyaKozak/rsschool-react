@@ -1,15 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { vi } from 'vitest';
+import { Provider } from 'react-redux';
 
 import { rest, server } from '../../../testServer';
 import { API } from '../../constants/api';
-import CardsContext from '../../context/cardsContext';
-import { apiResponse } from '../../mock/apiResponse';
 import { miniCards } from '../../mock/cards';
 import { fullCard } from '../../mock/fullCard';
-import { ICardsContext } from '../../types/context';
-import { ResponseData } from '../../types/responseData';
+import store from '../../store';
 import MiniCardList from './MiniCardList';
 
 beforeEach(() => {
@@ -23,7 +20,11 @@ beforeEach(() => {
 
 describe('MiniCardList', () => {
   it('renders cards', async () => {
-    render(<MiniCardList books={miniCards} />);
+    render(
+      <Provider store={store}>
+        <MiniCardList books={miniCards} />
+      </Provider>
+    );
 
     const HARRY_TEXT_APPEAR_ON_PAGE = 21;
     expect(screen.queryAllByText(/harry/i)).toHaveLength(HARRY_TEXT_APPEAR_ON_PAGE);
@@ -39,7 +40,11 @@ describe('MiniCardList', () => {
 
     const user = userEvent.setup();
 
-    render(<MiniCardList books={miniCards} />);
+    render(
+      <Provider store={store}>
+        <MiniCardList books={miniCards} />
+      </Provider>
+    );
     const card = screen.getByText(/Harry The Dirty Dog/i);
     user.click(card);
     expect(await screen.findByTestId('modal')).toBeInTheDocument();
@@ -61,17 +66,10 @@ describe('MiniCardList', () => {
 
     const user = userEvent.setup();
 
-    const cardsContext: ICardsContext = {
-      responseData: apiResponse.docs as ResponseData[],
-      updateResponseData: vi.fn(),
-      cards: miniCards,
-      updateCards: vi.fn(),
-    };
-
     render(
-      <CardsContext.Provider value={cardsContext}>
+      <Provider store={store}>
         <MiniCardList books={miniCards} />
-      </CardsContext.Provider>
+      </Provider>
     );
     const card = screen.getByText(/Harry The Dirty Dog/i);
     await user.click(card);
