@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import MiniCardList from '../components/Cards/MiniCardList';
 import Loader from '../components/Loader/Loader';
 import Search from '../components/Search/Search';
-import { API } from '../constants/api';
+import { OPEN_LIBRARY_API } from '../constants/api';
 import { useSearchBooksQuery } from '../services/openLibraryApi';
 import { RootState } from '../store';
 import { MiniCard } from '../types/miniCard';
@@ -45,7 +45,7 @@ const HomePage: React.FC = () => {
         <h1>Books</h1>
         <em>
           Search results from&nbsp;
-          <a href={`${API.OpenLibrary}`}>Open Library API</a>
+          <a href={`${OPEN_LIBRARY_API.docs}`}>Open Library API</a>
         </em>
       </div>
       {isError && 'error' in error && <div className="error">{error.error}</div>}

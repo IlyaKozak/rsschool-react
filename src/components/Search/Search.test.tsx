@@ -1,16 +1,11 @@
-import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
+import { screen } from '@testing-library/react';
 
+import { renderWithProviders } from '../../utils/testUtils';
 import Search from './Search';
-import store from '../../store';
 
 describe('Search', () => {
   it('renders search input with placeholder search text', async () => {
-    render(
-      <Provider store={store}>
-        <Search disabled={false} />
-      </Provider>
-    );
+    renderWithProviders(<Search disabled={false} />);
     expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument();
   });
 });

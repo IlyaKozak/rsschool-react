@@ -1,19 +1,23 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
 
+import { rest, server } from '../../testServer';
+import { API_TEST } from '../constants/api';
+import { apiResponse } from '../mock/apiResponse';
 import HomePage from '../pages/HomePage';
-import store from '../store';
+import { renderWithProviders } from '../utils/testUtils';
 
 describe('HomePage', () => {
   it('renders loader after entering search query', async () => {
+    server.use(
+      rest.get(API_TEST.OpenLibraryTest, (req, res, ctx) => {
+        return res(ctx.status(200), ctx.json(apiResponse), ctx.delay(100));
+      })
+    );
+
     const user = userEvent.setup();
 
-    render(
-      <Provider store={store}>
-        <HomePage />
-      </Provider>
-    );
+    renderWithProviders(<HomePage />);
 
     const search = screen.getByPlaceholderText(/search/i);
     user.type(search, 'harry{enter}');
@@ -24,11 +28,7 @@ describe('HomePage', () => {
   it('renders cards from API for searh query (harry)', async () => {
     const user = userEvent.setup();
 
-    render(
-      <Provider store={store}>
-        <HomePage />
-      </Provider>
-    );
+    renderWithProviders(<HomePage />);
     const search = screen.getByPlaceholderText(/search/i);
     user.type(search, 'harry{enter}');
 

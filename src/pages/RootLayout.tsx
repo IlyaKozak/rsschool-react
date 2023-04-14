@@ -3,13 +3,13 @@ import { Outlet } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import HeaderNavigation from '../components/Header/HeaderNavigation';
-import store from '../store';
+import { setupStore } from '../store';
 
 const RootLayout: React.FC = () => {
   return (
     <>
       <HeaderNavigation />
-      <Provider store={store}>
+      <Provider store={setupStore()}>
         <Outlet />
       </Provider>
     </>

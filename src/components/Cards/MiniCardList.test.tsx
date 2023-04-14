@@ -1,12 +1,11 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
 
 import { rest, server } from '../../../testServer';
-import { API } from '../../constants/api';
+import { API_TEST } from '../../constants/api';
 import { miniCards } from '../../mock/cards';
 import { fullCard } from '../../mock/fullCard';
-import store from '../../store';
+import { renderWithProviders } from '../../utils/testUtils';
 import MiniCardList from './MiniCardList';
 
 beforeEach(() => {
@@ -20,59 +19,32 @@ beforeEach(() => {
 
 describe('MiniCardList', () => {
   it('renders cards', async () => {
-    render(
-      <Provider store={store}>
-        <MiniCardList books={miniCards} />
-      </Provider>
-    );
+    renderWithProviders(<MiniCardList books={miniCards} />);
 
     const HARRY_TEXT_APPEAR_ON_PAGE = 21;
     expect(screen.queryAllByText(/harry/i)).toHaveLength(HARRY_TEXT_APPEAR_ON_PAGE);
   });
 
   it('renders full card modal on click', async () => {
-    let portalRoot = document.getElementById('portal');
-    if (!portalRoot) {
-      portalRoot = document.createElement('div');
-      portalRoot.setAttribute('id', 'portal');
-      document.body.appendChild(portalRoot);
-    }
-
     const user = userEvent.setup();
-
-    render(
-      <Provider store={store}>
-        <MiniCardList books={miniCards} />
-      </Provider>
-    );
+    renderWithProviders(<MiniCardList books={miniCards} />);
     const card = screen.getByText(/Harry The Dirty Dog/i);
     user.click(card);
+
     expect(await screen.findByTestId('modal')).toBeInTheDocument();
   });
 
   it('renders full card with description', async () => {
-    let portalRoot = document.getElementById('portal');
-    if (!portalRoot) {
-      portalRoot = document.createElement('div');
-      portalRoot.setAttribute('id', 'portal');
-      document.body.appendChild(portalRoot);
-    }
-
     server.use(
-      rest.get(API.BookUrl + fullCard.key + '.json', (req, res, ctx) => {
-        return res(ctx.status(200), ctx.json(fullCard));
+      rest.get(API_TEST.OpenLibrary + fullCard.key + '.json', (req, res, ctx) => {
+        return res(ctx.status(200), ctx.json(fullCard), ctx.delay(100));
       })
     );
-
     const user = userEvent.setup();
 
-    render(
-      <Provider store={store}>
-        <MiniCardList books={miniCards} />
-      </Provider>
-    );
+    renderWithProviders(<MiniCardList books={miniCards} />);
     const card = screen.getByText(/Harry The Dirty Dog/i);
-    await user.click(card);
+    user.click(card);
 
     expect(
       await screen.findByText(/When a white dog with black spots runs away from home/i)
