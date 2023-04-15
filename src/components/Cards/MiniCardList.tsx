@@ -79,7 +79,7 @@ const MiniCardList: React.FC<MiniCardListProps> = (props) => {
         <Modal isOpen={isModalOpen} onClose={modalHandler}>
           {error && 'status' in error && <p className="error">{error.status}</p>}
           {isFetching && <Loader />}
-          {!isFetching && !error && fullCard && <FullCardItem key={fullCard.id} {...fullCard} />}
+          {fullCard && <FullCardItem key={fullCard.id} {...fullCard} />}
         </Modal>
       </section>
     </>

@@ -26,6 +26,7 @@ const FullCardItem: React.FC<FullCard> = (props) => {
     if (!cover) return;
     const img = new Image();
     const src = `${OPEN_LIBRARY_API.coversEndpoint}${cover}-M.jpg`;
+
     img.src = src;
     img.onload = () => {
       setImgSrc(src);
