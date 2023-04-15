@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import MiniCardList from '../components/Cards/MiniCardList';
 import Loader from '../components/Loader/Loader';
 import Search from '../components/Search/Search';
 import { OPEN_LIBRARY_API } from '../constants/api';
+import { useAppSelector } from '../hooks/hooks';
 import { useSearchBooksQuery } from '../services/openLibraryApi';
 import { RootState } from '../store';
 import { MiniCard } from '../types/miniCard';
@@ -13,7 +13,7 @@ import './HomePage.css';
 
 const HomePage: React.FC = () => {
   const [cards, setCards] = useState<MiniCard[]>([]);
-  const storedSearchValue = useSelector((state: RootState) => state.search.searchValue);
+  const storedSearchValue = useAppSelector((state: RootState) => state.search.searchValue);
   const { data, isError, error, isFetching } = useSearchBooksQuery(storedSearchValue);
 
   const transformResponse = useCallback(async (data: { docs: ResponseData[] }) => {

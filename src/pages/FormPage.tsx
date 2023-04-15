@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 
 import Form from '../components/Form/Form';
 import CardList from '../components/Cards/CardList';
@@ -7,10 +6,11 @@ import { Card } from '../types/card';
 import { RootState } from '../store';
 import { addFormCard } from '../store/formSlice';
 import serialize from '../utils/serialize';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 
 const FormPage: React.FC = () => {
-  const formCards = useSelector((state: RootState) => state.form.formCards);
-  const dispatch = useDispatch();
+  const formCards = useAppSelector((state: RootState) => state.form.formCards);
+  const dispatch = useAppDispatch();
 
   const addFormCardHandler = (card: Card) => {
     dispatch(addFormCard(serialize(card)));

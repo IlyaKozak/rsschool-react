@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import { MiniCardListProps } from '../../types/miniCard';
 import { ResponseBookData, ResponseData } from '../../types/responseData';
@@ -10,13 +9,14 @@ import Loader from '../Loader/Loader';
 import Modal from '../Modal/Modal';
 import { useLazyGetBookByKeyQuery, useSearchBooksQuery } from '../../services/openLibraryApi';
 import { RootState } from '../../store';
+import { useAppSelector } from '../../hooks/hooks';
 import './CardList.css';
 
 const MiniCardList: React.FC<MiniCardListProps> = (props) => {
   const { books } = props;
   const [fullCard, setFullCard] = useState<FullCard | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const storedSearchValue = useSelector((state: RootState) => state.search.searchValue);
+  const storedSearchValue = useAppSelector((state: RootState) => state.search.searchValue);
   const { data: responseData } = useSearchBooksQuery(storedSearchValue);
   const [getBookById, result] = useLazyGetBookByKeyQuery();
   const { error, isFetching } = result;

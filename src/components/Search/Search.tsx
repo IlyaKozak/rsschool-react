@@ -1,20 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 
 import {
   setSearchValue as setStoreSearchValue,
   setInitialSearchInput,
 } from '../../store/searchSlice';
 import { RootState } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import './Search.css';
 
 const Search: React.FC<{ disabled: boolean }> = (props) => {
   const { disabled } = props;
-  const storedSearchValue = useSelector((state: RootState) => state.search.searchValue);
-  const initialSearchInput = useSelector((state: RootState) => state.search.initialSearchInput);
+  const storedSearchValue = useAppSelector((state: RootState) => state.search.searchValue);
+  const initialSearchInput = useAppSelector((state: RootState) => state.search.initialSearchInput);
   const [searchValue, setSearchValue] = useState(initialSearchInput);
   const searchValueRef = useRef('');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
