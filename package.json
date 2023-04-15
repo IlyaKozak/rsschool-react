@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "ts-node --esm server.ts",
-    "build": "npm run lint && tsc && vite build",
+    "build:client": "npm run lint && tsc && vite build --outDir dist/client",
     "preview": "vite preview",
-    "lint": "npx eslint src",
-    "lint:fix": "npx eslint --fix src",
+    "lint": "npx eslint \"**/*.{ts,tsx}\"",
+    "lint:fix": "npx eslint --fix \"**/*.{ts,tsx}\"",
     "test": "vitest"
   },
   "dependencies": {
