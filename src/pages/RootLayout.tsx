@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 
 import HeaderNavigation from '../components/Header/HeaderNavigation';
 import { setupStore } from '../store';
+import '../index.css';
 
 const RootLayout: React.FC = () => {
   return (

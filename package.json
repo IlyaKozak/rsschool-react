@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "ts-node --esm server.ts",
-    "build:client": "npm run lint && tsc && vite build --outDir dist/client",
-    "preview": "vite preview",
+    "build:client": "npm run lint && tsc && vite build --outDir dist/client --ssrManifest",
+    "build:server": "npm run lint && tsc && vite build --outDir dist/server --ssr src/entryServer.tsx",
     "lint": "npx eslint \"**/*.{ts,tsx}\"",
     "lint:fix": "npx eslint --fix \"**/*.{ts,tsx}\"",
     "test": "vitest"

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { routes } from './App';
+import { routes } from './routes';
 
-describe('App', () => {
+describe('Routes', () => {
   it('renders not found page if invalid path', () => {
     const router = createMemoryRouter(routes, { initialEntries: ['/this-route-does-not-exist'] });
     render(<RouterProvider router={router} />);
