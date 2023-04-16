@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import HeaderNavigation from './HeaderNavigation';
 
 describe('HeaderNavigation', () => {
@@ -9,9 +9,9 @@ describe('HeaderNavigation', () => {
     const user = userEvent.setup();
 
     render(
-      <BrowserRouter>
+      <MemoryRouter>
         <HeaderNavigation />
-      </BrowserRouter>
+      </MemoryRouter>
     );
 
     await user.click(screen.getByRole('link', { name: 'About' }));
