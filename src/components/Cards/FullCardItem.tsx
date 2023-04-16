@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { API } from '../../constants/constants';
+import { OPEN_LIBRARY_API } from '../../constants/api';
 
 import { FullCard } from '../../types/fullCard';
 import Loader from '../Loader/Loader';
@@ -25,7 +25,8 @@ const FullCardItem: React.FC<FullCard> = (props) => {
   useEffect(() => {
     if (!cover) return;
     const img = new Image();
-    const src = `${API.CoversUrl}${cover}-M.jpg`;
+    const src = `${OPEN_LIBRARY_API.coversEndpoint}${cover}-M.jpg`;
+
     img.src = src;
     img.onload = () => {
       setImgSrc(src);

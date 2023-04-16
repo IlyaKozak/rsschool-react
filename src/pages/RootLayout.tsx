@@ -1,16 +1,17 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import HeaderNavigation from '../components/Header/HeaderNavigation';
-import CardsProvider from '../context/cardsProvider';
+import { setupStore } from '../store';
 
 const RootLayout: React.FC = () => {
   return (
     <>
       <HeaderNavigation />
-      <CardsProvider>
+      <Provider store={setupStore()}>
         <Outlet />
-      </CardsProvider>
+      </Provider>
     </>
   );
 };

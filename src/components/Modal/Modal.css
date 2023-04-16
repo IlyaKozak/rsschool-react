@@ -50,11 +50,10 @@
 
 .cross {
   position: absolute;
-  top: 0.7em;
-  right: 0.7em;
-  white-space: pre-line;
-  padding: 0.2em;
-  border-radius: 50%;
+  top: 0.73em;
+  right: 0.73em;
+  padding: 0.1em;
+  border-radius: 100%;
   background-color: #e0e0e0;
 }
 

@@ -1,68 +1,74 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { MiniCardListProps } from '../../types/miniCard';
-import { ResponseBookData } from '../../types/responseData';
+import { ResponseBookData, ResponseData } from '../../types/responseData';
 import { FullCard } from '../../types/fullCard';
 import MiniCardItem from './MiniCardItem';
-import CardsContext from '../../context/cardsContext';
 import FullCardItem from './FullCardItem';
-import { API } from '../../constants/constants';
-import useAPI from '../../hooks/useAPI';
 import Loader from '../Loader/Loader';
 import Modal from '../Modal/Modal';
+import { useLazyGetBookByKeyQuery, useSearchBooksQuery } from '../../services/openLibraryApi';
+import { RootState } from '../../store';
+import { useAppSelector } from '../../hooks/hooks';
 import './CardList.css';
 
 const MiniCardList: React.FC<MiniCardListProps> = (props) => {
-  const cardsContext = useContext(CardsContext);
-  const { responseData } = cardsContext;
-  const { isLoading, error, sendRequest } = useAPI();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [fullCard, setFullCard] = useState<FullCard>();
   const { books } = props;
+  const [fullCard, setFullCard] = useState<FullCard | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const storedSearchValue = useAppSelector((state: RootState) => state.search.searchValue);
+  const { data: responseData } = useSearchBooksQuery(storedSearchValue);
+  const [getBookById, result] = useLazyGetBookByKeyQuery();
+  const { error, isFetching } = result;
 
-  const requestCardFromAPI = (bookKey: string, callback: (data: ResponseBookData) => void) => {
-    sendRequest(
-      {
-        url: `${API.BookUrl}${bookKey}.json`,
-      },
-      (data) => callback(data)
-    );
-  };
+  const generateFullCard = useCallback((id: string, card: ResponseData, book: ResponseBookData) => {
+    let description = book?.description;
+    if (description instanceof Object) {
+      description = description.value;
+    }
+    let firstSentence = card?.first_sentence?.at(0);
+    if (book?.excerpts && book.excerpts[0].excerpt) {
+      firstSentence = Object.values(book.excerpts[0].excerpt).join('');
+    }
 
-  const showFullCardHandler = async (id: string) => {
-    setIsModalOpen(true);
-    const card = responseData[responseData.findIndex((book) => book.key === id)];
+    const newFullCard = new FullCard({
+      id,
+      title: card.title,
+      published: card.first_publish_year,
+      author: card.author_name?.slice(0, 2).join(', '),
+      cover: card.cover_edition_key,
+      firstSentence,
+      pages: card.number_of_pages_median,
+      persons: card.person?.slice(0, 4).join(', '),
+      places: card.place?.slice(0, 4).join(', '),
+      rating: card.ratings_average?.toFixed(1),
+      subject: card.subject?.slice(0, 4).join(', '),
+      description,
+    });
 
-    const generateCard = (data: ResponseBookData) => {
-      let description = data?.description;
-      if (description instanceof Object) {
-        description = description.value;
-      }
-      let firstSentence = card?.first_sentence?.at(0);
-      if (data.excerpts && data.excerpts[0].excerpt) {
-        firstSentence = Object.values(data.excerpts[0].excerpt).join('');
-      }
+    setFullCard(newFullCard);
+  }, []);
 
-      const newFullCard = new FullCard({
-        id,
-        title: card.title,
-        published: card.first_publish_year,
-        author: card.author_name?.slice(0, 2).join(', '),
-        cover: card.cover_edition_key,
-        firstSentence,
-        pages: card.number_of_pages_median,
-        persons: card.person?.slice(0, 4).join(', '),
-        places: card.place?.slice(0, 4).join(', '),
-        rating: card.ratings_average?.toFixed(1),
-        subject: card.subject?.slice(0, 4).join(', '),
-        description,
-      });
+  const showFullCardHandler = useCallback(
+    async (id: string) => {
+      if (!responseData) return;
+      const card = responseData.docs[responseData.docs.findIndex((book) => book.key === id)];
 
-      setFullCard(newFullCard);
-    };
+      setIsModalOpen(true);
+      getBookById(id, true)
+        .unwrap()
+        .then((book) => {
+          generateFullCard(id, card, book);
+        })
+        .catch(() => {});
+    },
+    [responseData, getBookById, generateFullCard]
+  );
 
-    requestCardFromAPI(id, generateCard);
-  };
+  const modalHandler = useCallback(() => {
+    setIsModalOpen(false);
+    setFullCard(null);
+  }, []);
 
   return (
     <>
@@ -70,10 +76,10 @@ const MiniCardList: React.FC<MiniCardListProps> = (props) => {
         {books.map((book) => (
           <MiniCardItem key={book.id} {...book} onClick={showFullCardHandler} />
         ))}
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          {error && <p className="error-message">{error}</p>}
-          {isLoading && <Loader />}
-          {!isLoading && !error && fullCard && <FullCardItem key={fullCard.id} {...fullCard} />}
+        <Modal isOpen={isModalOpen} onClose={modalHandler}>
+          {error && 'status' in error && <p className="error">{error.status}</p>}
+          {isFetching && <Loader />}
+          {fullCard && <FullCardItem key={fullCard.id} {...fullCard} />}
         </Modal>
       </section>
     </>

@@ -1,25 +1,43 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { searchValueKey } from '../../constants/constants';
-import withStorage, { WithStorageProps } from '../../hoc/withStorage';
-import { SearchProps } from '../../types/form';
+import {
+  setSearchValue as setStoreSearchValue,
+  setInitialSearchInput,
+} from '../../store/searchSlice';
+import { RootState } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import './Search.css';
 
-const Search: React.FC<SearchProps & WithStorageProps> = (props) => {
-  const { getValue, setValue, onSearch } = props;
-  const storedSearchValue = getValue() ?? '';
-  const [searchValue, setSearchValue] = useState(storedSearchValue);
+const Search: React.FC<{ disabled: boolean }> = (props) => {
+  const { disabled } = props;
+  const storedSearchValue = useAppSelector((state: RootState) => state.search.searchValue);
+  const initialSearchInput = useAppSelector((state: RootState) => state.search.initialSearchInput);
+  const [searchValue, setSearchValue] = useState(initialSearchInput);
+  const searchValueRef = useRef('');
+  const dispatch = useAppDispatch();
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    onSearch(searchValue);
-    setValue(searchValue);
+    dispatch(setStoreSearchValue(searchValue));
+    searchValueRef.current = '';
     setSearchValue('');
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
+    const newSearchValue = event.target.value;
+    searchValueRef.current = newSearchValue;
+    setSearchValue(newSearchValue);
   };
+
+  const setValueOnCleanup = useCallback(() => {
+    if (storedSearchValue !== searchValueRef.current) {
+      dispatch(setInitialSearchInput(searchValue));
+    }
+  }, [storedSearchValue, dispatch, searchValue]);
+
+  useEffect(() => {
+    return setValueOnCleanup;
+  }, [setValueOnCleanup]);
 
   return (
     <form className="search" onSubmit={submitHandler}>
@@ -28,9 +46,10 @@ const Search: React.FC<SearchProps & WithStorageProps> = (props) => {
         placeholder="&#128269; Search here … Press Enter"
         value={searchValue}
         onChange={onChange}
+        disabled={disabled}
       />
     </form>
   );
 };
 
-export default withStorage(Search, localStorage, searchValueKey);
+export default Search;

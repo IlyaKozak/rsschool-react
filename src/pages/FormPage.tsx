@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Form from '../components/Form/Form';
 import CardList from '../components/Cards/CardList';
 import { Card } from '../types/card';
+import { RootState } from '../store';
+import { addFormCard } from '../store/formSlice';
+import serialize from '../utils/serialize';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 
 const FormPage: React.FC = () => {
-  const [formCards, setFormCards] = useState<Card[]>([]);
+  const formCards = useAppSelector((state: RootState) => state.form.formCards);
+  const dispatch = useAppDispatch();
+
   const addFormCardHandler = (card: Card) => {
-    setFormCards((prevCards) => [...prevCards, card]);
+    dispatch(addFormCard(serialize(card)));
   };
 
   return (

@@ -13,7 +13,7 @@ export class Card {
   title: string;
   author: string;
   image: string;
-  published: Date;
+  published: string;
   isAvailable: boolean;
   bookcover: string;
   genre: string;
@@ -23,7 +23,11 @@ export class Card {
     this.title = title;
     this.author = author;
     this.image = image;
-    this.published = published;
+    this.published = published.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
     this.isAvailable = isAvailable;
     this.bookcover = bookcover;
     this.genre = genre;
