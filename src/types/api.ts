@@ -14,3 +14,10 @@ export type DataType = {
 };
 
 export type callbackType<T> = (data: T) => void;
+
+export type InitType = {
+  method: string;
+  headers: Headers;
+  signal: AbortSignal;
+  body?: string;
+};

@@ -5,7 +5,7 @@ import AboutPage from './pages/AboutPage';
 import FormPage from './pages/FormPage';
 import { pagePath } from './constants/constants';
 
-export const routes = [
+const routes = [
   {
     path: pagePath.Home,
     element: <RootLayout />,

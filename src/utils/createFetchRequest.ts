@@ -1,5 +1,7 @@
 import { Request as ExpressRequest } from 'express';
 
+import { InitType } from '../types/api';
+
 export default function createFetchRequest(req: ExpressRequest) {
   const origin = `${req.protocol}://${req.get('host')}`;
   const url = new URL(req.originalUrl || req.url, origin);
@@ -20,13 +22,6 @@ export default function createFetchRequest(req: ExpressRequest) {
       }
     }
   }
-
-  type InitType = {
-    method: string;
-    headers: Headers;
-    signal: AbortSignal;
-    body?: string;
-  };
 
   const init: InitType = {
     method: req.method,
