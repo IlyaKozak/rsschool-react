@@ -20,4 +20,11 @@ export default defineConfig({
       all: true,
     },
   },
+  optimizeDeps: { include: ['react/jsx-dev-runtime'] },
+  build: {
+    minify: false,
+  },
+  ssr: {
+    noExternal: ['@reduxjs/toolkit/'],
+  },
 });

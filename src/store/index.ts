@@ -1,8 +1,12 @@
-import { configureStore, combineReducers, PreloadedState } from '@reduxjs/toolkit';
+import * as toolkitRaw from '@reduxjs/toolkit';
 
 import searchSlice from './searchSlice';
 import formSlice from './formSlice';
 import { openLibraryApi } from '../services/openLibraryApi';
+import { TypeToolkitRaw } from '../types/toolkitRaw';
+
+const { configureStore, combineReducers } = ((toolkitRaw as TypeToolkitRaw).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 export const rootReducer = combineReducers({
   search: searchSlice.reducer,
@@ -10,10 +14,9 @@ export const rootReducer = combineReducers({
   [openLibraryApi.reducerPath]: openLibraryApi.reducer,
 });
 
-export function setupStore(preloadedState?: PreloadedState<RootState>) {
+export function setupStore() {
   return configureStore({
     reducer: rootReducer,
-    preloadedState,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(openLibraryApi.middleware),
   });
 }
