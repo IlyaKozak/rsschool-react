@@ -23,6 +23,7 @@ export default defineConfig({
   optimizeDeps: { include: ['react/jsx-dev-runtime'] },
   build: {
     minify: false,
+    target: 'esnext',
   },
   ssr: {
     noExternal: ['@reduxjs/toolkit/'],

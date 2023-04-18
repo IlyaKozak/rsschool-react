@@ -1,55 +1,91 @@
-import fs from 'fs';
-import path from 'path';
+import { readFile } from 'fs/promises';
+import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
-import express, { NextFunction, Request, Response } from 'express';
-import { createServer as createViteServer } from 'vite';
+import express from 'express';
+import type { Request, Response } from 'express';
+import { createServer as createViteServer, ViteDevServer } from 'vite';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const resolvePath = (pathToResolve: string) => resolve(__dirname, pathToResolve);
 
 async function createServer() {
   const app = express();
 
-  const vite = await createViteServer({
-    server: { middlewareMode: true },
-    appType: 'custom',
-  });
+  const isProduction = process.env.NODE_ENV === 'production';
+  let vite: ViteDevServer;
 
-  app.use(vite.middlewares);
+  if (!isProduction) {
+    vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: 'custom',
+    });
 
-  app.use('*', async (req: Request, res: Response, next: NextFunction) => {
+    app.use(vite.middlewares);
+  } else {
+    app.use((await import('compression')).default());
+    app.use(
+      (await import('serve-static')).default(resolvePath('./client'), {
+        index: false,
+      })
+    );
+  }
+
+  app.use('*', async (req: Request, res: Response) => {
     const url = req.originalUrl;
 
     try {
-      let template = fs.readFileSync(path.resolve(__dirname, 'index.html'), 'utf-8');
-      template = await vite.transformIndexHtml(url, template);
-      const htmlParts = template.split('<!--app-html-->');
+      let template;
+      let render;
 
-      const { render } = await vite.ssrLoadModule('/src/entryServer.tsx');
-      const { pipe } = await render(req, {
-        onShellReady() {
-          res.write(htmlParts[0]);
-          pipe(res);
-        },
-        onShellError(error: unknown) {
-          console.error(error);
-        },
-        onAllReady() {
-          res.write(htmlParts[1]);
-          res.end();
-        },
-        onError(error: unknown) {
-          console.error(error);
-        },
-      });
-    } catch (e) {
-      if (e instanceof Error) {
-        vite.ssrFixStacktrace(e);
+      if (!isProduction) {
+        template = await readFile(resolvePath('index.html'), 'utf-8');
+        template = await vite.transformIndexHtml(url, template);
+        render = (await vite.ssrLoadModule('/src/entryServer.tsx')).render;
+      } else {
+        template = await readFile(resolvePath('./client/index.html'), 'utf-8');
+        render = (await import(resolvePath('./server/entryServer.js'))).render;
       }
-      next(e);
+
+      try {
+        const htmlParts = template.split('<!--app-html-->');
+        const { pipe } = await render(req, {
+          onShellReady() {
+            res.write(htmlParts[0]);
+            pipe(res);
+          },
+          onShellError(error: unknown) {
+            console.error(error);
+          },
+          onAllReady() {
+            res.write(htmlParts[1]);
+            res.end();
+          },
+          onError(error: unknown) {
+            console.error(error);
+          },
+        });
+      } catch (e) {
+        if (e instanceof Response && e.status >= 300 && e.status <= 399) {
+          return res.redirect(301, e.url);
+        }
+        throw e;
+      }
+    } catch (error) {
+      if (!(error instanceof Error)) return;
+      if (!isProduction) {
+        vite.ssrFixStacktrace(error);
+      }
+      console.log(error.stack);
+      res.status(500).end(error.stack);
     }
   });
 
-  app.listen(5173, () => console.log('Server listening on http://localhost:5173'));
+  app.listen(5173, () =>
+    console.log(
+      isProduction ? 'Production' : 'Development',
+      'Server listening on http://localhost:5173'
+    )
+  );
 }
 
 createServer();

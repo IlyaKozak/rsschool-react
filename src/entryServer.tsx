@@ -17,9 +17,17 @@ export async function render(req: Request, options?: RenderToPipeableStreamOptio
 
   const context = (await query(fetchRequest)) as StaticHandlerContext;
 
+  if (context instanceof Response) {
+    throw context;
+  }
+
   return ReactDOMServer.renderToPipeableStream(
     <React.StrictMode>
-      <StaticRouterProvider router={createStaticRouter(dataRoutes, context)} context={context} />
+      <StaticRouterProvider
+        router={createStaticRouter(dataRoutes, context)}
+        context={context}
+        nonce="the-nonce"
+      />
     </React.StrictMode>,
     options
   );
