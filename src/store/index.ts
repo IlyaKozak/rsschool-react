@@ -14,9 +14,10 @@ export const rootReducer = combineReducers({
   [openLibraryApi.reducerPath]: openLibraryApi.reducer,
 });
 
-export function setupStore() {
+export function setupStore(preloadedState?: toolkitRaw.PreloadedState<RootState>) {
   return configureStore({
     reducer: rootReducer,
+    preloadedState,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(openLibraryApi.middleware),
   });
 }

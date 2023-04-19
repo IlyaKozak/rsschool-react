@@ -47,8 +47,8 @@ async function createServer() {
       }
 
       try {
-        const htmlParts = template.split('<!--app-html-->');
-        const { pipe } = await render(req, {
+        const htmlParts = template.split('<!--app-->');
+        const [{ pipe }, preloadedState] = await render(req, {
           onShellReady() {
             res.write(htmlParts[0]);
             pipe(res);
@@ -58,6 +58,11 @@ async function createServer() {
           },
           onAllReady() {
             res.write(htmlParts[1]);
+            res.write(`<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
+              preloadedState
+            ).replace(/</g, '\\u003c')}</script>
+            `);
+            res.write(htmlParts[2]);
             res.end();
           },
           onError(error: unknown) {
@@ -75,8 +80,7 @@ async function createServer() {
       if (!isProduction) {
         vite.ssrFixStacktrace(error);
       }
-      console.log(error.stack);
-      res.status(500).end(error.stack);
+      res.status(500).end(error);
     }
   });
 

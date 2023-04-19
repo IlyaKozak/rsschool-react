@@ -5,7 +5,9 @@
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "outDir": "./dist/",
+    "types": ["node", "vite/client", "vite-plugin-svgr/client"]
   },
-  "include": ["server.ts"]
+  "include": ["server.ts"],
 }

@@ -9,25 +9,18 @@ import { useSearchBooksQuery } from '../services/openLibraryApi';
 import { RootState } from '../store';
 import { MiniCard } from '../types/miniCard';
 import { ResponseData } from '../types/responseData';
+import { responseDataToCards } from '../utils/dataResponseToCards';
 import './HomePage.css';
 
 const HomePage: React.FC = () => {
-  const [cards, setCards] = useState<MiniCard[]>([]);
   const storedSearchValue = useAppSelector((state: RootState) => state.search.searchValue);
   const { data, isError, error, isFetching } = useSearchBooksQuery(storedSearchValue);
+  const miniCards = (data?.docs ?? []).reduce(responseDataToCards, []);
+  const [cards, setCards] = useState<MiniCard[]>(miniCards ?? []);
 
   const transformResponse = useCallback(async (data: { docs: ResponseData[] }) => {
     const responseData = data?.docs as ResponseData[];
-
-    const newCards: MiniCard[] = [];
-    responseData?.map((card: ResponseData) => {
-      const { title, author_name, first_publish_year: published, key: id } = card;
-      const author = author_name?.slice(0, 2).join(', ');
-      if (!title || !author || !published) return;
-      const newCard = new MiniCard({ id, title, author, published });
-      newCards.push(newCard);
-    });
-
+    const newCards: MiniCard[] = responseData?.reduce(responseDataToCards, []);
     setCards(newCards);
   }, []);
 
@@ -54,7 +47,7 @@ const HomePage: React.FC = () => {
         !isError &&
         (cards.length > 0 ? (
           <>
-            <p>Search text [saved on submit]: {storedSearchValue}</p>
+            <p>Search text: {storedSearchValue}</p>
             <MiniCardList books={cards} />
           </>
         ) : (
