@@ -18,7 +18,16 @@
     "allowJs": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": ["node", "jest", "@testing-library/jest-dom", "vitest", "vite/client", "vite-plugin-svgr/client"]
+    "sourceMap": true,
+    "types": [
+      "node", 
+      "jest", 
+      "@testing-library/jest-dom", 
+      "vitest", 
+      "vite/client", 
+      "vite-plugin-svgr/client",
+      "vite-plugin-istanbul"
+    ]
   },
   "ts-node": {
     "esm": true,

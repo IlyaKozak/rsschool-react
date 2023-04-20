@@ -24,7 +24,7 @@ async function createServer() {
   } else {
     app.use((await import('compression')).default());
     app.use(
-      (await import('serve-static')).default(resolvePath('./client'), {
+      express.static(resolvePath('./client'), {
         index: false,
       })
     );
@@ -40,7 +40,7 @@ async function createServer() {
       if (!isProduction) {
         template = await readFile(resolvePath('index.html'), 'utf-8');
         template = await vite.transformIndexHtml(url, template);
-        render = (await vite.ssrLoadModule('/src/entryServer.tsx')).render;
+        render = (await vite.ssrLoadModule('src/entryServer.tsx')).render;
       } else {
         template = await readFile(resolvePath('./client/index.html'), 'utf-8');
         render = (await import(resolvePath('./server/entryServer.js'))).render;
