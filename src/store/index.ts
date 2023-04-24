@@ -5,7 +5,7 @@ import formSlice from './formSlice';
 import { openLibraryApi } from '../services/openLibraryApi';
 import { TypeToolkitRaw } from '../types/toolkitRaw';
 
-const { configureStore, combineReducers } = ((toolkitRaw as TypeToolkitRaw).default ??
+const { configureStore, combineReducers } = ((toolkitRaw as TypeToolkitRaw)?.default ??
   toolkitRaw) as typeof toolkitRaw;
 
 export const rootReducer = combineReducers({

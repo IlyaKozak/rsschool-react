@@ -1,4 +1,10 @@
 {
   "all": true,
-  "extends": "@istanbuljs/nyc-config-typescript"
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/assets/**/*"
+  ]
 }

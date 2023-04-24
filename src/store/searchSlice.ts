@@ -3,7 +3,8 @@ import * as toolkitRaw from '@reduxjs/toolkit';
 import { SLICE } from '../constants/store';
 import { TypeToolkitRaw } from '../types/toolkitRaw';
 
-const { createSlice } = ((toolkitRaw as TypeToolkitRaw).default ?? toolkitRaw) as typeof toolkitRaw;
+const { createSlice } = ((toolkitRaw as TypeToolkitRaw)?.default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 const searchSlice = createSlice({
   name: SLICE.search,

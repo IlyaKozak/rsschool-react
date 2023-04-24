@@ -4,7 +4,8 @@ import { SLICE } from '../constants/store';
 import { Card } from '../types/card';
 import { TypeToolkitRaw } from '../types/toolkitRaw';
 
-const { createSlice } = ((toolkitRaw as TypeToolkitRaw).default ?? toolkitRaw) as typeof toolkitRaw;
+const { createSlice } = ((toolkitRaw as TypeToolkitRaw)?.default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 const formSlice = createSlice({
   name: SLICE.form,
