@@ -1,0 +1,201 @@
+{
+  "numFound": 3,
+  "start": 0,
+  "numFoundExact": true,
+  "docs": [
+      {
+          "key": "/works/OL20858279W",
+          "type": "work",
+          "seed": [
+              "/books/OL28241829M",
+              "/works/OL20858279W",
+              "/subjects/internet_programming",
+              "/authors/OL7494664A"
+          ],
+          "title": "Building React Apps with Server-Side Rendering",
+          "title_suggest": "Building React Apps with Server-Side Rendering",
+          "title_sort": "Building React Apps with Server-Side Rendering",
+          "edition_count": 1,
+          "edition_key": [
+              "OL28241829M"
+          ],
+          "publish_date": [
+              "Apr 03, 2020"
+          ],
+          "publish_year": [
+              2020
+          ],
+          "first_publish_year": 2020,
+          "number_of_pages_median": 207,
+          "isbn": [
+              "9781484258682",
+              "1484258681"
+          ],
+          "last_modified_i": 1640482680,
+          "ebook_count_i": 0,
+          "ebook_access": "no_ebook",
+          "has_fulltext": false,
+          "public_scan_b": false,
+          "cover_edition_key": "OL28241829M",
+          "cover_i": 10172885,
+          "publisher": [
+              "Apress"
+          ],
+          "author_key": [
+              "OL7494664A"
+          ],
+          "author_name": [
+              "Mohit Thakkar"
+          ],
+          "subject": [
+              "Internet programming"
+          ],
+          "publisher_facet": [
+              "Apress"
+          ],
+          "subject_facet": [
+              "Internet programming"
+          ],
+          "_version_": 1759763255712022528,
+          "author_facet": [
+              "OL7494664A Mohit Thakkar"
+          ],
+          "subject_key": [
+              "internet_programming"
+          ]
+      },
+      {
+          "key": "/works/OL19545090W",
+          "type": "work",
+          "seed": [
+              "/books/OL26835727M",
+              "/works/OL19545090W",
+              "/subjects/javascript_(computer_program_language)",
+              "/subjects/application_software_development",
+              "/authors/OL7496776A"
+          ],
+          "title": "Next.js Quick Start Guide: Server-side rendering done right",
+          "title_suggest": "Next.js Quick Start Guide: Server-side rendering done right",
+          "title_sort": "Next.js Quick Start Guide: Server-side rendering done right",
+          "edition_count": 1,
+          "edition_key": [
+              "OL26835727M"
+          ],
+          "publish_date": [
+              "Jul 26, 2018"
+          ],
+          "publish_year": [
+              2018
+          ],
+          "first_publish_year": 2018,
+          "number_of_pages_median": 164,
+          "isbn": [
+              "1788993667",
+              "9781788993661"
+          ],
+          "last_modified_i": 1632179550,
+          "ebook_count_i": 0,
+          "ebook_access": "no_ebook",
+          "has_fulltext": false,
+          "public_scan_b": false,
+          "readinglog_count": 4,
+          "want_to_read_count": 4,
+          "currently_reading_count": 0,
+          "already_read_count": 0,
+          "cover_edition_key": "OL26835727M",
+          "cover_i": 8511342,
+          "publisher": [
+              "Packt Publishing"
+          ],
+          "author_key": [
+              "OL7496776A"
+          ],
+          "author_name": [
+              "Kirill Konshin"
+          ],
+          "subject": [
+              "Javascript (computer program language)",
+              "Application software, development"
+          ],
+          "publisher_facet": [
+              "Packt Publishing"
+          ],
+          "subject_facet": [
+              "Application software, development",
+              "Javascript (computer program language)"
+          ],
+          "_version_": 1759760342322249728,
+          "author_facet": [
+              "OL7496776A Kirill Konshin"
+          ],
+          "subject_key": [
+              "application_software_development",
+              "javascript_(computer_program_language)"
+          ]
+      },
+      {
+          "key": "/works/OL19542158W",
+          "type": "work",
+          "seed": [
+              "/books/OL26832867M",
+              "/works/OL19542158W",
+              "/subjects/application_software",
+              "/authors/OL7494813A"
+          ],
+          "title": "Server-Side Enterprise Development with Angular: Use Angular Universal to pre-render your web pages, improving SEO and application UX",
+          "title_suggest": "Server-Side Enterprise Development with Angular: Use Angular Universal to pre-render your web pages, improving SEO and application UX",
+          "title_sort": "Server-Side Enterprise Development with Angular: Use Angular Universal to pre-render your web pages, improving SEO and application UX",
+          "edition_count": 1,
+          "edition_key": [
+              "OL26832867M"
+          ],
+          "publish_date": [
+              "Nov 29, 2018"
+          ],
+          "publish_year": [
+              2018
+          ],
+          "first_publish_year": 2018,
+          "number_of_pages_median": 142,
+          "isbn": [
+              "9781789806267",
+              "1789806267"
+          ],
+          "last_modified_i": 1632191687,
+          "ebook_count_i": 0,
+          "ebook_access": "no_ebook",
+          "has_fulltext": false,
+          "public_scan_b": false,
+          "cover_edition_key": "OL26832867M",
+          "cover_i": 8507943,
+          "publisher": [
+              "Packt Publishing"
+          ],
+          "author_key": [
+              "OL7494813A"
+          ],
+          "author_name": [
+              "Bram Borggreve"
+          ],
+          "subject": [
+              "Application software"
+          ],
+          "publisher_facet": [
+              "Packt Publishing"
+          ],
+          "subject_facet": [
+              "Application software"
+          ],
+          "_version_": 1759760279426564096,
+          "author_facet": [
+              "OL7494813A Bram Borggreve"
+          ],
+          "subject_key": [
+              "application_software"
+          ]
+      }
+  ],
+  "num_found": 3,
+  "q": "server side rendering",
+  "offset": null
+}
