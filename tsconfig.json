@@ -8,18 +8,31 @@
     "noImplicitAny": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
     "baseUrl": "./src",
     "resolveJsonModule": true,
     "useDefineForClassFields": true,
-    "allowJs": false,
+    "allowJs": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": ["node", "jest", "@testing-library/jest-dom", "vitest", "vite/client", "vite-plugin-svgr/client"]
+    "sourceMap": true,
+    "types": [
+      "node", 
+      "jest", 
+      "@testing-library/jest-dom", 
+      "vitest", 
+      "vite/client", 
+      "vite-plugin-svgr/client",
+      "vite-plugin-istanbul"
+    ]
   },
-  "include": ["src"],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
+  },
+  "include": ["src/**/*", "server.ts", "setupTests.ts", "testServer.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,7 +1,11 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import * as rtkQuery from '@reduxjs/toolkit/dist/query/react';
 
 import { OPEN_LIBRARY_API } from '../constants/api';
 import { ResponseBookData, ResponseData } from '../types/responseData';
+
+export type TypeRTKQuery = typeof rtkQuery & { default?: unknown };
+const { createApi, fetchBaseQuery } = ((rtkQuery as TypeRTKQuery).default ??
+  rtkQuery) as typeof rtkQuery;
 
 export const openLibraryApi = createApi({
   reducerPath: 'openLibraryApi',

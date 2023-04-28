@@ -1,5 +1,4 @@
 import { ReactComponent as Loading } from './Loading.svg';
-import { ReactComponent as Ripples } from './Ripples.svg';
 import './Loader.css';
 
 const Loader = () => {
@@ -7,7 +6,6 @@ const Loader = () => {
     <div className="loader" data-testid="loader">
       &nbsp;
       <Loading />
-      <Ripples />
     </div>
   );
 };

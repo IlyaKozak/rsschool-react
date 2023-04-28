@@ -5,9 +5,17 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
+import istanbul from 'vite-plugin-istanbul';
 
 export default defineConfig({
-  plugins: [svgr(), react()],
+  plugins: [
+    react(),
+    svgr(),
+    istanbul({
+      cypress: true,
+      requireEnv: false,
+    }),
+  ],
   test: {
     globals: true,
     environment: 'jsdom',
@@ -19,5 +27,14 @@ export default defineConfig({
       reporter: ['text'],
       all: true,
     },
+  },
+  optimizeDeps: { include: ['react/jsx-dev-runtime'] },
+  build: {
+    minify: false,
+    target: 'esnext',
+    sourcemap: true,
+  },
+  ssr: {
+    noExternal: ['@reduxjs/toolkit/'],
   },
 });
