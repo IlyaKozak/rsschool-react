@@ -17,7 +17,8 @@ describe('Home Page', () => {
     cy.get('.loader').should('not.exist');
 
     cy.get('article').should(($article) => {
-      expect($article).to.have.length(3);
+      const NUMBER_OF_CARDS_WITH_INITIAL_SEARCH = 3;
+      expect($article).to.have.length(NUMBER_OF_CARDS_WITH_INITIAL_SEARCH);
 
       expect($article).to.contain('Server-Side');
     });
@@ -33,7 +34,8 @@ describe('Home Page', () => {
     cy.get('.loader').should('be.visible');
 
     cy.get('article').should(($article) => {
-      expect($article).to.have.length(20);
+      const NUMBER_OF_CARDS_WITH_SEARCH_FOR_HARRY = 20;
+      expect($article).to.have.length(NUMBER_OF_CARDS_WITH_SEARCH_FOR_HARRY);
 
       expect($article).to.contain('Harry');
     });
@@ -79,6 +81,24 @@ describe('Home Page', () => {
     cy.get('article.fullcard').should('be.visible');
 
     cy.get('.cross').click();
+    cy.get('article.fullcard').should('not.exist');
+  });
+
+  it('renders modal with full card on mini card click and closes it on click on overlay', () => {
+    cy.intercept('https://openlibrary.org/search.json?q=&limit=20', {
+      fixture: 'ssr.json',
+    });
+    cy.intercept('https://openlibrary.org/works/OL19545090W.json', {
+      fixture: 'OL19545090W.json',
+    });
+    cy.intercept('https://covers.openlibrary.org/b/olid/OL26835727M-M.jpg', {
+      fixture: 'OL26835727M-M.jpg',
+    });
+
+    cy.contains('Next.js').click();
+    cy.get('article.fullcard').should('be.visible');
+
+    cy.get('.backdrop').click({ force: true });
     cy.get('article.fullcard').should('not.exist');
   });
 });
